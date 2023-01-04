@@ -7,8 +7,10 @@
 
 #define GARDEN_SIZE 10
 
-typedef enum {NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST} movement;
+typedef enum {NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST, STATIONARY} DIRECTION;
 
-int numberOfRounds = 0;
+struct lettuce;
+struct slug;
+struct frog;
 
 #endif //PROJECT_GARDEN_H

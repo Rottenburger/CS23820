@@ -20,7 +20,7 @@ int main() {
 
     /* 2D array declaration*/
     int highBed[12][12] = {
-            //{1}, {5}
+            //{0}, {1},{2}, {3},{4}, {5}
     };
 
 
@@ -34,16 +34,6 @@ int main() {
         }
         printf("\n");
     }
-
-    //CREATURES
-    struct organism {
-        int x;
-        int y;
-        int age;
-        int hunger;
-        char type;
-        bool isMature;
-    };
 
     printf("Garden Paradise End\n");
     return 0;
