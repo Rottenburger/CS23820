@@ -9,4 +9,6 @@
 
 typedef enum {NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST} movement;
 
+int numberOfRounds = 0;
+
 #endif //PROJECT_GARDEN_H

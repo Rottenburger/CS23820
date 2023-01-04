@@ -3,4 +3,4 @@ project(Project C)
 
 set(CMAKE_C_STANDARD 17)
 
-add_executable(Project main.c garden.h)
+add_executable(Project main.c garden.h garden_initialise.c)
