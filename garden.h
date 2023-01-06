@@ -5,12 +5,11 @@
 #ifndef PROJECT_GARDEN_H
 #define PROJECT_GARDEN_H
 
-#define GARDEN_SIZE 10
+#define GARDEN_SIZE 12
 
-typedef enum {NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST, STATIONARY} DIRECTION;
+typedef enum {NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST, STATIONARY} direction;
+typedef enum {LETTUCE, SLUG, FROG, EMPTY} type;
 
-struct lettuce;
-struct slug;
-struct frog;
+struct organism;
 
 #endif //PROJECT_GARDEN_H

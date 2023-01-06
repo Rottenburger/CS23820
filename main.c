@@ -23,18 +23,6 @@ int main() {
             //{0}, {1},{2}, {3},{4}, {5}
     };
 
-
-    //THIS WILL PRINT THE MATRIX
-    int row, columns;
-    for (row=0; row<10; row++)
-    {
-        for(columns=0; columns<10; columns++)
-        {
-            printf("%d ", highBed[row][columns]);
-        }
-        printf("\n");
-    }
-
     printf("Garden Paradise End\n");
     return 0;
 }
