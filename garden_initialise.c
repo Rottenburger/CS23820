@@ -39,5 +39,5 @@ void fillHighBed(){
     l1.row = 11;
     l1.growProb = 0.8;
 
-    highBed[11][11] = l1;
+    highBed[5][5] = l1;
 }

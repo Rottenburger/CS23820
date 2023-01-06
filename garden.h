@@ -41,5 +41,6 @@ void fillHighBed();
 void printHighBed();
 void printDisplayType();
 int openConfig(int a, char **b);
+void movesManager();
 
 #endif //PROJECT_GARDEN_H
