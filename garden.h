@@ -15,6 +15,7 @@ struct organism;
 void fillHighBed();
 void initDynamicArray();
 void printHighBed();
+void printOnlyChar();
 void freeMemoryHighBed();
 
 #endif //PROJECT_GARDEN_H

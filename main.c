@@ -20,7 +20,8 @@ int main() {
 
     //initDynamicArray();
     fillHighBed();
-    printHighBed();
+    //printHighBed();
+    printOnlyChar();
     //freeMemoryHighBed();
 
     printf("Garden Paradise End\n");
