@@ -26,7 +26,7 @@ typedef enum {LETTUCE, SLUG, FROG, EMPTY} type;
 struct organism {
     int row;
     int column;
-    float growProb;
+    double growProb;
     int age;
     int hunger;
     bool isMature;

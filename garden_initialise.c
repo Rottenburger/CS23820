@@ -37,12 +37,7 @@ void fillHighBed(){
     l1.displayType = 'l';
     l1.column = 11;
     l1.row = 11;
+    l1.growProb = 0.8;
 
     highBed[11][11] = l1;
-}
-
-//Set random number seed
-void set_random_seed() {
-    time_t t = time(0);
-    srand(t);
 }
