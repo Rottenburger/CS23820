@@ -5,29 +5,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "garden.h"
-
-/**
- * This structure forms the basis for all the organisms in
- * the simulation. It contains all the paramenters for each
- * type of creature which could get confusing if more creatures
- * or paramenters were added. However, given the minimal number
- * it should be sufficent for now.
- * Varibles include its location, direction, type, display type
- * (used for printing) etc.
- */
-struct organism {
-    int row;
-    int column;
-    float growProb;
-    int age;
-    int hunger;
-    bool isMature;
-    int visionDistance;
-    int lifespan;
-    char displayType;
-    type type;
-    direction dir;
-};
+#include <time.h>
 
 /**
  * This is the 2D array that will contain all of the cells of data
@@ -63,20 +41,8 @@ void fillHighBed(){
     highBed[11][11] = l1;
 }
 
-void printHighBed() {
-    for (int i = 0; i < GARDEN_SIZE; i++) {
-        for (int j = 0; j < GARDEN_SIZE; j++) {
-            printf("(%d,%d) = (%d,%d,%c) ", i, j, highBed[i][j].column, highBed[i][j].row, highBed[i][j].displayType);
-        }
-        printf("\n");
-    }
-}
-
-void printDisplayType() {
-    for (int i = 0; i < GARDEN_SIZE; i++) {
-        for (int j = 0; j < GARDEN_SIZE; j++) {
-            printf("%c", highBed[i][j].displayType);
-        }
-        printf("\n");
-    }
+//Set random number seed
+void set_random_seed() {
+    time_t t = time(0);
+    srand(t);
 }

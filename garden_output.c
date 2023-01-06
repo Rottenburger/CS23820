@@ -7,24 +7,22 @@
 #include <stdio.h>
 #include "garden.h"
 
-//extern struct organism highBed[GARDEN_SIZE][GARDEN_SIZE];
+extern struct organism highBed[GARDEN_SIZE][GARDEN_SIZE];
 
-/*void printHighBed() {
-
+void printHighBed() {
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
-            printf("(%d,%d) = (%d,%d)\n", i, j, highBed[i][j].column, highBed[i][j].row);
-        }
-    }*/
-
-
-    /*int row, columns;
-    for (row=0; row<10; row++)
-    {
-        for(columns=0; columns<10; columns++)
-        {
-            printf("%d ", highBed[row][columns]);
+            printf("(%d,%d) = (%d,%d,%c) ", i, j, highBed[i][j].column, highBed[i][j].row, highBed[i][j].displayType);
         }
         printf("\n");
     }
-}*/
+}
+
+void printDisplayType() {
+    for (int i = 0; i < GARDEN_SIZE; i++) {
+        for (int j = 0; j < GARDEN_SIZE; j++) {
+            printf("%c", highBed[i][j].displayType);
+        }
+        printf("\n");
+    }
+}
