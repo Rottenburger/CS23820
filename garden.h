@@ -4,6 +4,7 @@
 
 #ifndef PROJECT_GARDEN_H
 #define PROJECT_GARDEN_H
+#define DEBUG
 
 #define GARDEN_SIZE 12
 
@@ -13,9 +14,7 @@ typedef enum {LETTUCE, SLUG, FROG, EMPTY} type;
 struct organism;
 
 void fillHighBed();
-void initDynamicArray();
 void printHighBed();
-void printOnlyChar();
-void freeMemoryHighBed();
+void printDisplayType();
 
 #endif //PROJECT_GARDEN_H

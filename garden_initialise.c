@@ -30,49 +30,40 @@ struct organism {
 };
 
 /**
- * This is the 2D array that will contain all
- * of the cells of data and is used to represent
- * the highbed described.
+ * This is the 2D array that will contain all of the cells of data
+ * and is used to represent the highbed described.
  */
 struct organism highBed[GARDEN_SIZE][GARDEN_SIZE];
 
-
-/*void initDynamicArray() {
-    highBed = malloc(GARDEN_SIZE * sizeof(struct organism *));
-
-    for (int i = 0; i < GARDEN_SIZE; i++) {
-        highBed[i] = malloc(GARDEN_SIZE * sizeof(struct organism));
-    }
-}
-
-void freeMemoryHighBed() {
-    for (int i = 0; i < GARDEN_SIZE; i++) {
-        free(highBed[i]);
-    }
-    free(highBed);
-}*/
-
 void fillHighBed(){
-    struct organism l1;
-    l1.type = FROG;
-    l1.displayType = 'f';
-    l1.column = 11;
-    l1.row = 11;
-
+    //Fill the highbed will empty structs
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
             highBed[i][j].column = i;
             highBed[i][j].row = j;
+            highBed[i][j].growProb = 0;
+            highBed[i][j].age = 0;
+            highBed[i][j].hunger = 0;
+            highBed[i][j].isMature = false;
+            highBed[i][j].visionDistance = 0;
+            highBed[i][j].lifespan = 0;
             highBed[i][j].displayType = 'O';
+            highBed[i][j].type = EMPTY;
+            highBed[i][j].dir = STATIONARY;
         }
     }
 
-    highBed[11][11] = l1;
+    //placeholder TODO
+    struct organism l1;
+    l1.type = LETTUCE;
+    l1.displayType = 'l';
+    l1.column = 11;
+    l1.row = 11;
 
+    highBed[11][11] = l1;
 }
 
 void printHighBed() {
-
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
             printf("(%d,%d) = (%d,%d,%c) ", i, j, highBed[i][j].column, highBed[i][j].row, highBed[i][j].displayType);
@@ -81,8 +72,7 @@ void printHighBed() {
     }
 }
 
-void printOnlyChar() {
-
+void printDisplayType() {
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
             printf("%c", highBed[i][j].displayType);
