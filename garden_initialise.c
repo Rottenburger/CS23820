@@ -3,6 +3,7 @@
 //
 #include <malloc.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include "garden.h"
 
 struct organism {
@@ -19,10 +20,10 @@ struct organism {
     direction dir;
 };
 
-struct organism **highBed;
+struct organism highBed[GARDEN_SIZE][GARDEN_SIZE];
 
 
-void dynamicArray() {
+/*void initDynamicArray() {
     highBed = malloc(GARDEN_SIZE * sizeof(struct organism *));
 
     for (int i = 0; i < GARDEN_SIZE; i++) {
@@ -35,36 +36,30 @@ void freeMemoryHighBed() {
         free(highBed[i]);
     }
     free(highBed);
-}
+}*/
 
-/*struct lettuce {
-    int row;
-    int column;
-    float growProb;
-    char type;
-};
+void fillHighBed(){
+    struct organism l1;
+    l1.type = LETTUCE;
+    l1.column = 11;
+    l1.row = 11;
 
-struct slug {
-    int row;
-    int column;
-    int age;
-    int hunger;
-    char type;
-    int lifespan;
-    DIRECTION direction;
-};*/
+    for (int i = 0; i < GARDEN_SIZE; i++) {
+        for (int j = 0; j < GARDEN_SIZE; j++) {
+            highBed[i][j].column = i;
+            highBed[i][j].row = j;
+        }
+    }
 
-/*
-void initialiseLettuce(){
-    struct lettuce l1;
-    l1.growProb = 1;
-    l1.row = 1;
-    l1.column = 1;
-    l1.type = 'O';
-
-}
-
-void fillHighbed(){
-    struct lettuce l1;
     highBed[11][11] = l1;
-};*/
+
+}
+
+void printHighBed() {
+
+    for (int i = 0; i < GARDEN_SIZE; i++) {
+        for (int j = 0; j < GARDEN_SIZE; j++) {
+            printf("(%d,%d) = (%d,%d)\n", i, j, highBed[i][j].column, highBed[i][j].row);
+        }
+    }
+}

@@ -18,10 +18,10 @@ int main() {
      * https://stackoverflow.com/questions/54475287/trying-to-change-element-in-2d-array-in-c
      */
 
-    /* 2D array declaration*/
-    int highBed[12][12] = {
-            //{0}, {1},{2}, {3},{4}, {5}
-    };
+    //initDynamicArray();
+    fillHighBed();
+    printHighBed();
+    //freeMemoryHighBed();
 
     printf("Garden Paradise End\n");
     return 0;

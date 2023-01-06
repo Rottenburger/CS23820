@@ -12,4 +12,9 @@ typedef enum {LETTUCE, SLUG, FROG, EMPTY} type;
 
 struct organism;
 
+void fillHighBed();
+void initDynamicArray();
+void printHighBed();
+void freeMemoryHighBed();
+
 #endif //PROJECT_GARDEN_H
