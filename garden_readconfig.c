@@ -5,6 +5,13 @@
 #include <stdlib.h>
 #include "garden.h"
 
+/*extern struct organism lettuce = {
+        .growProb = 0.8,
+        .type = LETTUCE,
+        .displayType = " O ",
+};*/
+
+
 void openConfig() {
     FILE *file = fopen("config1.txt", "r");
     if (file == NULL) {

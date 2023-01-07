@@ -14,6 +14,23 @@
 typedef enum {NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST, STATIONARY} direction;
 typedef enum {LETTUCE, SLUG, FROG, EMPTY, WALL} type;
 
+struct lettuce {
+    double growProb;
+};
+
+struct slug {
+    double slugReproduceProb;
+    int slugLifespan;
+    int slugMatureAge;
+};
+
+struct frog{
+    double frogReproduceProb;
+    int frogLifespan;
+    int frogMatureAge;
+    int visionDistance;
+};
+
 /**
  * This structure forms the basis for all the organisms in
  * the simulation. It contains all the paramenters for each
@@ -26,15 +43,15 @@ typedef enum {LETTUCE, SLUG, FROG, EMPTY, WALL} type;
 struct organism {
     int row;
     int column;
-    double growProb;
     int age;
-    int hunger;
     bool isMature;
-    int visionDistance;
-    int lifespan;
     type type;
     direction dir;
     char displayType[3];
+
+    struct lettuce;
+    struct slug;
+    struct frog;
 };
 
 void fillHighBed();

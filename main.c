@@ -14,7 +14,7 @@ int main() {
     fillHighBed();
     movesManager();
     printDisplayType();
-    openConfig();
+    //openConfig();
 
     //print all struct data on the highbed //TODO
 #ifndef DEBUG

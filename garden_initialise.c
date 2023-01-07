@@ -14,7 +14,7 @@
  */
 struct organism highBed[GARDEN_SIZE][GARDEN_SIZE];
 
-struct organism lettuce = {
+/*struct organism lettuce = {
         .growProb = 0.8,
         .type = LETTUCE,
         .displayType = " O ",
@@ -34,7 +34,7 @@ struct organism frog = {
         .growProb = 0.8,
         .type = LETTUCE,
         .displayType = " f ",
-};
+};*/
 
 void fillHighBed(){
     //Fill the highbed will empty structs
@@ -49,7 +49,6 @@ void fillHighBed(){
             highBed[i][j].visionDistance = 0;
             highBed[i][j].lifespan = 0;
             strcpy(highBed[i][j].displayType, "   ");
-            //highBed[i][j].displayType = '0';
             highBed[i][j].type = EMPTY;
             highBed[i][j].dir = STATIONARY;
         }
