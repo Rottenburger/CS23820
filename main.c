@@ -11,9 +11,9 @@ int main() {
 
     //int day = 0; //Timer for each round of the simulation
 
-    /*fillHighBed();
+    fillHighBed();
     movesManager();
-    printDisplayType();*/
+    printDisplayType();
     openConfig();
 
     //print all struct data on the highbed //TODO
@@ -21,6 +21,6 @@ int main() {
 
 #endif //DEBUG
 
-    printf("Highbed simulator end!\n");
+    printf("\nHighbed simulator end!\n");
     return 0;
 }
