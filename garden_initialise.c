@@ -14,6 +14,28 @@
  */
 struct organism highBed[GARDEN_SIZE][GARDEN_SIZE];
 
+struct organism lettuce = {
+        .growProb = 0.8,
+        .type = LETTUCE,
+        .displayType = " O ",
+};
+
+struct organism slug = {
+        .column = 11,
+        .row = 11,
+        .growProb = 0.8,
+        .type = LETTUCE,
+        .displayType = " s ",
+};
+
+struct organism frog = {
+        .column = 11,
+        .row = 11,
+        .growProb = 0.8,
+        .type = LETTUCE,
+        .displayType = " f ",
+};
+
 void fillHighBed(){
     //Fill the highbed will empty structs
     for (int i = 0; i < GARDEN_SIZE; i++) {
@@ -63,13 +85,14 @@ void fillHighBed(){
     }
 
     //placeholder TODO
-    struct organism l1;
-    l1.type = LETTUCE;
-    //l1.displayType = 'l';
-    strcpy(l1.displayType, " l ");
-    l1.column = 11;
-    l1.row = 11;
-    l1.growProb = 0.8;
+/*    struct organism lettuce;*/
+    /*lettuce.type = LETTUCE;
+    strcpy(lettuce.displayType, " O ");
+    lettuce.column = 11;
+    lettuce.row = 11;
+    lettuce.growProb = 0.8;*/
 
-    highBed[10][10] = l1;
+    highBed[5][5] = lettuce;
+    highBed[5][8] = slug;
+    highBed[2][5] = frog;
 }

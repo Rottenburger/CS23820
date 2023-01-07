@@ -9,6 +9,7 @@
 #include <time.h>
 #include <string.h>
 extern struct organism highBed[GARDEN_SIZE][GARDEN_SIZE];
+extern struct organism lettuce; //TODO change l2 to l
 
 /**
 * set the random number seed to produce unpredictable random sequences
@@ -58,54 +59,50 @@ void movesManager(){
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
             switch (highBed[i][j].type) {
-                case 0:
+                case 0: //LETTUCE
                     highBed[i][j].age++;
                     growChance = random0to1();
-                    if(highBed[i][j].growProb > growChance){
-                        struct organism l2; //TODO change l2 to l
-                        l2.type = LETTUCE;
-                        strcpy(l2.displayType, " l ");
-                        l2.growProb = 0.8;
-
-                        /*int numOfNeighbours = 0;
-                        struct organism neighbors[4] = {highBed[i-1][j], highBed[i+1][j], highBed[i][j-1], highBed[i][j+1]};
-                        for (int k = 0; k < 4; k++) {
-                                if(neighbors[k].type == WALL) {
-                                    continue;
-                            }
-                                numOfNeighbours++;
-                        }*/
-
+                    if(highBed[i][j].growProb > growChance && 0 < highBed[i][j].age){
                         growLocation = random_range(1, 4);
                         switch (growLocation) {
                             case 1:
                                 if(highBed[i][j+1].type != WALL){
-                                    highBed[i][j+1] = l2;
+                                    highBed[i][j+1] = lettuce;
                                 }
                                 break;
                             case 2:
                                 if(highBed[i][j-1].type != WALL){
-                                    highBed[i][j-1] = l2;
+                                    highBed[i][j-1] = lettuce;
                                 }
                                 break;
                             case 3:
                                 if(highBed[i+1][j].type != WALL){
-                                    highBed[i+1][j] = l2;
+                                    highBed[i+1][j] = lettuce;
                                 }
                                 break;
                             case 4:
                                 if(highBed[i-1][j].type != WALL){
-                                    highBed[i-1][j] = l2;
+                                    highBed[i-1][j] = lettuce;
                                 }
                                 break;
                         }
                     }
                     break;
-                case 1:
-                    // code block
+                case 1: //SLUG
+                    highBed[i][j].age++;
+
+                    break;
+                case 2: //FROG
+                    highBed[i][j].age++;
+                    break;
+                case 3: //EMPTY
+                    // Move onto next cell
+                    break;
+                case 4: //WALL
+                    // Move onto next cell
                     break;
                 default:
-                    // move on to the next cell
+                    printf("error, there appears to be an undefined cell");
                     break;
             } 
         }

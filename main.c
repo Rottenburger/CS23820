@@ -11,9 +11,10 @@ int main() {
 
     //int day = 0; //Timer for each round of the simulation
 
-    fillHighBed();
+    /*fillHighBed();
     movesManager();
-    printDisplayType();
+    printDisplayType();*/
+    openConfig();
 
     //print all struct data on the highbed //TODO
 #ifndef DEBUG

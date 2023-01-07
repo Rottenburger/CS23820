@@ -5,11 +5,10 @@
 #include <stdlib.h>
 #include "garden.h"
 
-int openConfig(int argc, char **argv) {
+void openConfig() {
     FILE *file = fopen("config1.txt", "r");
     if (file == NULL) {
         perror("config file not found");
-        return 1;
     }
 
     char buffer[BUFFER_SIZE];

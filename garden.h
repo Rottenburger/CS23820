@@ -18,7 +18,7 @@ typedef enum {LETTUCE, SLUG, FROG, EMPTY, WALL} type;
  * This structure forms the basis for all the organisms in
  * the simulation. It contains all the paramenters for each
  * type of creature which could get confusing if more creatures
- * or paramenters were added. However, given the minimal number
+ * or paramenters are added. However, given the minimal number
  * it should be sufficent for now.
  * Varibles include its location, direction, type, display type
  * (used for printing) etc.
@@ -40,7 +40,7 @@ struct organism {
 void fillHighBed();
 void printHighBed();
 void printDisplayType();
-int openConfig(int a, char **b);
+void openConfig();
 void movesManager();
 
 #endif //PROJECT_GARDEN_H
