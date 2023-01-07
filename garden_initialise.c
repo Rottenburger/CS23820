@@ -26,7 +26,7 @@ void fillHighBed(){
             highBed[i][j].isMature = false;
             highBed[i][j].visionDistance = 0;
             highBed[i][j].lifespan = 0;
-            strcpy(highBed[i][j].displayType, " 0 ");
+            strcpy(highBed[i][j].displayType, "   ");
             //highBed[i][j].displayType = '0';
             highBed[i][j].type = EMPTY;
             highBed[i][j].dir = STATIONARY;
@@ -71,5 +71,5 @@ void fillHighBed(){
     l1.row = 11;
     l1.growProb = 0.8;
 
-    highBed[5][5] = l1;
+    highBed[10][10] = l1;
 }

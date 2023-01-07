@@ -47,9 +47,13 @@ double random0to1(){
 }*/
 
 void movesManager(){
-    set_random_seed();
+    set_random_seed(); //reset seed every move
     double growChance = 0;
     int growLocation = 0;
+
+    //Used for checking neighbours on 2D grid
+    int offsetx[] = {0, 1, 1, 1, 0, -1, -1, -1};
+    int offsety[] = {-1, -1, 0, 1, 1, 1, 0, -1};
 
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
@@ -63,23 +67,36 @@ void movesManager(){
                         strcpy(l2.displayType, " l ");
                         l2.growProb = 0.8;
 
-                        struct organism neighbors[4][2] = {{i-1, j}, {i+1, j}, {i, j-1}, {i, j+1}};
-                        if(neighbors[3][1].type == WALL) {
+                        /*int numOfNeighbours = 0;
+                        struct organism neighbors[4] = {highBed[i-1][j], highBed[i+1][j], highBed[i][j-1], highBed[i][j+1]};
+                        for (int k = 0; k < 4; k++) {
+                                if(neighbors[k].type == WALL) {
+                                    continue;
+                            }
+                                numOfNeighbours++;
+                        }*/
 
-                        }
                         growLocation = random_range(1, 4);
                         switch (growLocation) {
                             case 1:
-                                highBed[i][j+1] = l2;
+                                if(highBed[i][j+1].type != WALL){
+                                    highBed[i][j+1] = l2;
+                                }
                                 break;
                             case 2:
-                                highBed[i][j-1] = l2;
+                                if(highBed[i][j-1].type != WALL){
+                                    highBed[i][j-1] = l2;
+                                }
                                 break;
                             case 3:
-                                highBed[i+1][j] = l2;
+                                if(highBed[i+1][j].type != WALL){
+                                    highBed[i+1][j] = l2;
+                                }
                                 break;
                             case 4:
-                                highBed[i-1][j] = l2;
+                                if(highBed[i-1][j].type != WALL){
+                                    highBed[i-1][j] = l2;
+                                }
                                 break;
                         }
                     }
