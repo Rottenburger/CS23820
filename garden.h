@@ -12,7 +12,7 @@
 #include <stdbool.h>
 
 typedef enum {NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST, STATIONARY} direction;
-typedef enum {LETTUCE, SLUG, FROG, EMPTY} type;
+typedef enum {LETTUCE, SLUG, FROG, EMPTY, WALL} type;
 
 /**
  * This structure forms the basis for all the organisms in
@@ -32,9 +32,9 @@ struct organism {
     bool isMature;
     int visionDistance;
     int lifespan;
-    char displayType;
     type type;
     direction dir;
+    char displayType[3];
 };
 
 void fillHighBed();

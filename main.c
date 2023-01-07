@@ -7,9 +7,9 @@ C & C++ module assignment by Thomas Roethenbaugh 11/12/2022
 #include "garden.h"
 
 int main() {
-    printf("Welcome to the garden highbed simulation\n");
+    printf("Welcome to highbed simulator!\n");
 
-    int day = 0; //Timer for each round of the simulation
+    //int day = 0; //Timer for each round of the simulation
 
     fillHighBed();
     movesManager();
@@ -20,6 +20,6 @@ int main() {
 
 #endif //DEBUG
 
-    printf("Garden Paradise End\n");
+    printf("Highbed simulator end!\n");
     return 0;
 }

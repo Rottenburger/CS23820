@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include "garden.h"
 #include <time.h>
+#include <string.h>
 extern struct organism highBed[GARDEN_SIZE][GARDEN_SIZE];
 
 /**
@@ -35,8 +36,12 @@ double random0to1(){
     return ((double)rand())/RAND_MAX;
 }
 
-/*bool isValidDir(int i, int j, direction dir) {
-    if (i < GARDEN_SIZE || j < GARDEN_SIZE || i > n - 1 || j > m - 1)
+/*bool isWall(int i, int j, direction dir) {
+    int neighbors[4][2] = {{i-1, j}, {i+1, j}, {i, j-1}, {i, j+1}};
+    for (int k = 0; k < 4; k++) {
+        if(neighbors[k][k].)
+    }
+
         return 0;
     return 1;
 }*/
@@ -50,15 +55,18 @@ void movesManager(){
         for (int j = 0; j < GARDEN_SIZE; j++) {
             switch (highBed[i][j].type) {
                 case 0:
+                    highBed[i][j].age++;
                     growChance = random0to1();
                     if(highBed[i][j].growProb > growChance){
                         struct organism l2; //TODO change l2 to l
                         l2.type = LETTUCE;
-                        l2.displayType = 'l';
-                        l2.column = 11;
-                        l2.row = 11;
+                        strcpy(l2.displayType, " l ");
                         l2.growProb = 0.8;
 
+                        struct organism neighbors[4][2] = {{i-1, j}, {i+1, j}, {i, j-1}, {i, j+1}};
+                        if(neighbors[3][1].type == WALL) {
+
+                        }
                         growLocation = random_range(1, 4);
                         switch (growLocation) {
                             case 1:
@@ -86,6 +94,18 @@ void movesManager(){
         }
 
     }
+}
+
+//Handles input for number of days to run
+int runSimulation(int d) {
+    for(int i = 0; i < d; i++) {
+        movesManager();
+    }
+    return 0;
+}
+
+void organismManager(){
+
 }
 
 void rounds(){
