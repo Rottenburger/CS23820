@@ -15,6 +15,7 @@ int main() {
     createWalls();
     movesManager();
     //runSimulation(10);
+    //printHighBed();
     printDisplayType();
     //openConfig();
 

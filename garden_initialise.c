@@ -66,12 +66,6 @@ void fillHighBed(){
     }
 
     //placeholder TODO
-/*    struct organism lettuce;*/
-    /*lettuce.type = LETTUCE;
-    strcpy(lettuce.displayType, " O ");
-    lettuce.column = 11;
-    lettuce.row = 11;
-    lettuce.growProb = 0.8;*/
 
     highBed[5][5] = newLettuce;
     highBed[6][7] = newSlug;

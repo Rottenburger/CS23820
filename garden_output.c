@@ -12,7 +12,7 @@ extern struct organism highBed[GARDEN_SIZE][GARDEN_SIZE];
 void printHighBed() {
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
-            printf("(%d,%d) = (%d,%d,%s) ", i, j, highBed[i][j].column, highBed[i][j].row, highBed[i][j].displayType);
+            printf("(%d,%d) = (%d,%s) ", i, j, highBed[i][j].age, highBed[i][j].displayType);
         }
         printf("\n");
     }

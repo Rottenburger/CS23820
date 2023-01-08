@@ -58,99 +58,138 @@ void movesManager() {
 
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
-            struct organism directions[8] = {
-                    highBed[i][j - 1], highBed[i + 1][j - 1], highBed[i + 1][j],
-                    highBed[i + 1][j + 1], highBed[i][j + 1], highBed[i - 1][j + 1],
-                    highBed[i - 1][j], highBed[i - 1][j - 1]
-            };
+            //printDisplayType(); //Used to print the screen after every cell is checked
+            if (highBed[i][j].hasCompletedTurn == false) { //If completed turn move on
+                struct organism directions[8] = {
+                        highBed[i][j - 1], highBed[i + 1][j - 1], highBed[i + 1][j],
+                        highBed[i + 1][j + 1], highBed[i][j + 1], highBed[i - 1][j + 1],
+                        highBed[i - 1][j], highBed[i - 1][j - 1]
+                };
 
-            switch (highBed[i][j].type) {
-                case LETTUCE:
-                    highBed[i][j].age++;
-                    double growChance = random0to1();
-                    if (highBed[i][j].l.growProb > growChance && highBed[i][j].hasCompletedTurn == false) {
-                        highBed[i][j].hasCompletedTurn = true;
-                        int growLocation = 0;
-                        growLocation = random_range(1, 8);
-                        switch (growLocation) {
-                            case 1:
-                                if (highBed[i][j + 1].type == EMPTY) {
-                                    highBed[i][j + 1] = newLettuce; //TODO refactor
-                                    highBed[i][j + 1].hasCompletedTurn = true;
-                                }
-                                break;
-                            case 2:
-                                if (highBed[i][j - 1].type == EMPTY) {
-                                    highBed[i][j - 1] = newLettuce;
-                                    highBed[i][j - 1].hasCompletedTurn = true;
-                                }
-                                break;
-                            case 3:
-                                if (highBed[i + 1][j].type == EMPTY) {
-                                    highBed[i + 1][j] = newLettuce;
-                                    highBed[i + 1][j].hasCompletedTurn = true;
-                                }
-                                break;
-                            case 4:
-                                if (highBed[i - 1][j].type == EMPTY) {
-                                    highBed[i - 1][j] = highBed[i][j];
-                                    highBed[i - 1][j].hasCompletedTurn = true;
-                                }
-                                break;
-                            case 5:
-                                if (highBed[1 + i][1 + j].type == EMPTY) {
-                                    highBed[1 + i][1 + j] = highBed[i][j];
-                                    highBed[1 + i][1 + j].hasCompletedTurn = true;
-                                }
-                                break;
-                            case 6:
-                                if (highBed[1 - i][1 - j].type == EMPTY) {
-                                    highBed[1 - i][1 - j] = highBed[i][j];
-                                    highBed[1 - i][1 - j].hasCompletedTurn = true;
-                                }
-                                break;
-                            case 7:
-                                if (highBed[1 + i][1 - j].type == EMPTY) {
-                                    highBed[1 + i][1 - j] = highBed[i][j];
-                                    highBed[1 + i][1 - j].hasCompletedTurn = true;
-                                }
-                                break;
-                            case 8:
-                                if (highBed[1 - i][1 + j].type == EMPTY) {
-                                    highBed[1 - i][1 + j] = highBed[i][j];
-                                    highBed[1 - i][1 + j].hasCompletedTurn = true;
-                                }
-                                break;
-                        }
-                    }
-                    break;
-                case SLUG:
-                    highBed[i][j].age++;
-                    if (highBed[i][j].s.slugMatureAge < highBed[i][j].age) {
-
-
-                        if (highBed[i][j].hasCompletedTurn == false) {
-
+                switch (highBed[i][j].type) {
+                    case LETTUCE:
+                        highBed[i][j].age++;
+                        double growChance = random0to1();
+                        if (highBed[i][j].l.growProb > growChance && highBed[i][j].hasCompletedTurn == false) {
+                            highBed[i][j].hasCompletedTurn = true;
+                            int growLocation = 0;
+                            growLocation = random_range(1, 8);
+                            switch (growLocation) {
+                                case 1:
+                                    if (directions[0].type == EMPTY) {
+                                        directions[0] = newLettuce;
+                                        directions[0].hasCompletedTurn = true;
+                                    }
+                                    break;
+                                case 2:
+                                    if (directions[1].type == EMPTY) {
+                                        directions[1] = newLettuce;
+                                        directions[1].hasCompletedTurn = true;
+                                    }
+                                    break;
+                                case 3:
+                                    if (directions[2].type == EMPTY) {
+                                        directions[2] = newLettuce;
+                                        directions[2].hasCompletedTurn = true;
+                                    }
+                                    break;
+                                case 4:
+                                    if (directions[3].type == EMPTY) {
+                                        directions[3] = newLettuce;
+                                        directions[3].hasCompletedTurn = true;
+                                    }
+                                    break;
+                                case 5:
+                                    if (directions[4].type == EMPTY) {
+                                        directions[4] = newLettuce;
+                                        directions[4].hasCompletedTurn = true;
+                                    }
+                                    break;
+                                case 6:
+                                    if (directions[5].type == EMPTY) {
+                                        directions[5] = newLettuce;
+                                        directions[5].hasCompletedTurn = true;
+                                    }
+                                    break;
+                                case 7:
+                                    if (directions[6].type == EMPTY) {
+                                        directions[6] = newLettuce;
+                                        directions[6].hasCompletedTurn = true;
+                                    }
+                                    break;
+                                case 8:
+                                    if (directions[7].type == EMPTY) {
+                                        directions[7] = newLettuce;
+                                        directions[7].hasCompletedTurn = true;
+                                    }
+                                    break;
+                            }
                         }
                         break;
-                        case FROG:
-                            highBed[i][j].age++;
+                    case SLUG:
+                        highBed[i][j].age++; //Increase age of slug
+                        if (highBed[i][j].age >= highBed[i][j].s.slugLifespan) {
+                            highBed[i][j] = emptySpace;
+                            break;
+                        }
+                        if (highBed[i][j].s.slugMatureAge < highBed[i][j].age) { //This handles slug reproduction
+                            for (int k = 0; k < 7; k++) {
+                                if (directions[k].type == SLUG &&
+                                highBed[i][j].s.slugMatureAge > highBed[i][j].age) {
+                                    int slugSpawnLocation = random_range(0, 7);
+                                    directions[slugSpawnLocation] = newSlug;
+                                }
+                            }
+                        }
+                        for (int l = 0; l < 7; l++) {
+                            if (directions[l].type == LETTUCE && highBed[i][j].hasCompletedTurn == false){
+                                directions[l] = emptySpace;
+                                highBed[i][j].hasCompletedTurn = true;
+                            }
+                        }
                         if (highBed[i][j].hasCompletedTurn == false) {
-                            highBed[i + 1][j] = highBed[i][j];
-                            highBed[i + 1][j].hasCompletedTurn = true;
+                            int moveDir = highBed[i][j].dir;
+                            directions[moveDir] = highBed[i][j];
                             highBed[i][j] = emptySpace;
                         }
                         break;
-                        case EMPTY:
-                            // Move onto next cell
+                    case FROG:
+                        highBed[i][j].age++; //Increase age of frog
+                        if (highBed[i][j].age >= highBed[i][j].s.slugLifespan) {
+                            highBed[i][j] = emptySpace;
                             break;
-                        case WALL:
-                            // Move onto next cell
-                            break;
-                        default:
-                            printf("error, there appears to be an undefined cell");
+                        }
+                        if (highBed[i][j].s.slugMatureAge < highBed[i][j].age) { //This handles slug reproduction
+                            for (int k = 0; k < 7; k++) {
+                                if (directions[k].type == SLUG &&
+                                    highBed[i][j].s.slugMatureAge > highBed[i][j].age) {
+                                    int slugSpawnLocation = random_range(0, 7);
+                                    directions[slugSpawnLocation] = newSlug;
+                                }
+                            }
+                        }
+                        for (int l = 0; l < 7; l++) {
+                            if (directions[l].type == LETTUCE && highBed[i][j].hasCompletedTurn == false){
+                                directions[l] = emptySpace;
+                                highBed[i][j].hasCompletedTurn = true;
+                            }
+                        }
+                        if (highBed[i][j].hasCompletedTurn == false) {
+                            int moveDir = highBed[i][j].dir;
+                            directions[moveDir] = highBed[i][j];
+                            highBed[i][j] = emptySpace;
+                        }
                         break;
-                    }
+                    case EMPTY:
+                        // Move onto next cell
+                        break;
+                    case WALL:
+                        // Move onto next cell
+                        break;
+                    default:
+                        printf("error, there appears to be an undefined cell");
+                        break;
+                }
             }
 
         }
