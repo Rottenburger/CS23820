@@ -24,9 +24,14 @@ void openConfig() {
 
     char buffer[BUFFER_SIZE];
     while (fgets(buffer, BUFFER_SIZE, file) != NULL) {
-        printf("%s", buffer);
+        //printf("%s", buffer);
     }
     fclose(file);
+
+    char *s;
+    //sscanf(BUFFER_SIZE, "%d", &SLUG_MATURE_AGE);
+    strtol("SLUG_MATURE_AGE", &s, BUFFER_SIZE);
+    printf("%d", SLUG_MATURE_AGE);
 }
 
 void readConfigData() {
