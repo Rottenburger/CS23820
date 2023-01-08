@@ -21,22 +21,28 @@ void openConfig() {
     if (file == NULL) {
         perror("config file not found");
     }
+
     char buffer[BUFFER_SIZE];
-
-/*    char line[150];
-    double lineFloat;
-    int lineInt;
-
-    while (fgets(buffer, BUFFER_SIZE, file) != NULL) {
-        line =
-
-
-    }*/
-
-    //char buffer[BUFFER_SIZE];
     while (fgets(buffer, BUFFER_SIZE, file) != NULL) {
         printf("%s", buffer);
     }
     fclose(file);
+}
+
+void readConfigData() {
+    float a;
+    float b;
+    float c;
+
+    FILE *file = fopen("config1.txt", "r");
+    fscanf(file, "%*s %f", &a);
+    fscanf(file, "%*s %f", &b);
+    fscanf(file, "%*s %f", &b);
+
+    fclose(file);
+
+    printf("a: %f\n", a);
+    printf("a: %f\n", b);
+    printf("a: %f\n", c);
 }
 

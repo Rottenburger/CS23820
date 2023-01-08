@@ -1,15 +1,14 @@
 //
 // Created by Thomas Roethenbaugh on 30/11/2022.
 //
-
-#ifndef PROJECT_GARDEN_H
-#define PROJECT_GARDEN_H
 #define DEBUG
 
 #define GARDEN_SIZE 12
 #define BUFFER_SIZE 1024
 
 #include <stdbool.h>
+
+//int day; //Timer for each round of the simulation
 
 typedef enum {NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST, STATIONARY} direction;
 typedef enum {LETTUCE, SLUG, FROG, EMPTY, WALL} type;
@@ -29,6 +28,7 @@ struct frog {
     int frogLifespan;
     int frogMatureAge;
     int visionDistance;
+    int hunger;
 };
 
 /**
@@ -55,13 +55,21 @@ struct organism {
     struct frog f;
 };
 
-void fillHighBed();
+//Output functions
 void printHighBed();
 void printDisplayType();
-void openConfig();
-void movesManager();
-void createWalls();
-int runSimulation(int i);
-void nextTurn();
 
-#endif //PROJECT_GARDEN_H
+//Config functions
+void openConfig();
+void readConfigData();
+
+//Init functions
+void fillHighBed();
+void createWalls();
+
+//Simulation functions
+int runSimulation(int i);
+void movesManager();
+void nextTurn();
+void updateOrganismMaturity();
+void clear_output();

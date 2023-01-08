@@ -13,15 +13,15 @@ int main() {
 
     fillHighBed();
     createWalls();
-    movesManager();
-    //runSimulation(10);
-    //printHighBed();
+    //movesManager();
+    runSimulation(100);
     printDisplayType();
     //openConfig();
+    //readConfigData();
 
     //print all struct data on the highbed //TODO
 #ifndef DEBUG
-
+    printHighBed();
 #endif //DEBUG
 
     printf("\nHighbed simulator end!\n");

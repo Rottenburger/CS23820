@@ -1,7 +1,6 @@
 //
 // Created by Thomas Roethenbaugh on 06/01/2023.
 //
-#include <malloc.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,9 +12,7 @@ extern struct organism newLettuce; //TODO change l2 to l
 extern struct organism newSlug;
 extern struct organism newFrog;
 extern struct organism emptySpace;
-
-int row;
-int collum;
+//extern int day = 0;
 
 /**
 * set the random number seed to produce unpredictable random sequences
@@ -58,7 +55,8 @@ void movesManager() {
 
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
-            //printDisplayType(); //Used to print the screen after every cell is checked
+            printDisplayType(); //Used to print the screen after every cell is checked
+            //clear_output(); //Non-scrolling TODO this is important for running it in the terminal
             if (highBed[i][j].hasCompletedTurn == false) { //If completed turn move on
                 struct organism directions[8] = {
                         highBed[i][j - 1], highBed[i + 1][j - 1], highBed[i + 1][j],
@@ -132,22 +130,21 @@ void movesManager() {
                             highBed[i][j] = emptySpace;
                             break;
                         }
-                        if (highBed[i][j].s.slugMatureAge < highBed[i][j].age) { //This handles slug reproduction
+                        if (highBed[i][j].isMature) { //This handles slug reproduction
                             for (int k = 0; k < 7; k++) {
-                                if (directions[k].type == SLUG &&
-                                highBed[i][j].s.slugMatureAge > highBed[i][j].age) {
+                                if (directions[k].type == SLUG && directions[k].isMature) {
                                     int slugSpawnLocation = random_range(0, 7);
                                     directions[slugSpawnLocation] = newSlug;
                                 }
                             }
                         }
-                        for (int l = 0; l < 7; l++) {
+                        for (int l = 0; l < 7; l++) { //This handles eating
                             if (directions[l].type == LETTUCE && highBed[i][j].hasCompletedTurn == false){
                                 directions[l] = emptySpace;
-                                highBed[i][j].hasCompletedTurn = true;
+                                directions[l].hasCompletedTurn = true;
                             }
                         }
-                        if (highBed[i][j].hasCompletedTurn == false) {
+                        if (highBed[i][j].hasCompletedTurn == false) { //This handles movement if not eaten
                             int moveDir = highBed[i][j].dir;
                             directions[moveDir] = highBed[i][j];
                             highBed[i][j] = emptySpace;
@@ -155,26 +152,27 @@ void movesManager() {
                         break;
                     case FROG:
                         highBed[i][j].age++; //Increase age of frog
-                        if (highBed[i][j].age >= highBed[i][j].s.slugLifespan) {
+                        highBed[i][j].f.hunger++; //Increase hunger of frog
+                        if (highBed[i][j].age >= highBed[i][j].f.frogLifespan) {
                             highBed[i][j] = emptySpace;
                             break;
                         }
-                        if (highBed[i][j].s.slugMatureAge < highBed[i][j].age) { //This handles slug reproduction
+                        if (highBed[i][j].isMature) { //This handles frog reproduction
                             for (int k = 0; k < 7; k++) {
-                                if (directions[k].type == SLUG &&
-                                    highBed[i][j].s.slugMatureAge > highBed[i][j].age) {
+                                if (directions[k].type == FROG && directions[k].isMature) {
                                     int slugSpawnLocation = random_range(0, 7);
-                                    directions[slugSpawnLocation] = newSlug;
+                                    directions[slugSpawnLocation] = newFrog;
                                 }
                             }
                         }
-                        for (int l = 0; l < 7; l++) {
-                            if (directions[l].type == LETTUCE && highBed[i][j].hasCompletedTurn == false){
-                                directions[l] = emptySpace;
-                                highBed[i][j].hasCompletedTurn = true;
+                        for (int l = 0; l < 7; l++) { //This handles eating TODO uses slug logic
+                            if (directions[l].type == SLUG && highBed[i][j].hasCompletedTurn == false){
+                                directions[l] = highBed[i][j];
+                                directions[l].f.hunger = 0;
+                                directions[l].hasCompletedTurn = true;
                             }
                         }
-                        if (highBed[i][j].hasCompletedTurn == false) {
+                        if (highBed[i][j].hasCompletedTurn == false) { //This handles movement if hungry and no food seen
                             int moveDir = highBed[i][j].dir;
                             directions[moveDir] = highBed[i][j];
                             highBed[i][j] = emptySpace;
@@ -200,7 +198,9 @@ void movesManager() {
 int runSimulation(int d) {
     for(int i = 0; i < d; i++) {
         movesManager();
+        updateOrganismMaturity();
         nextTurn();
+        //day++;
     }
     return 0;
 }
@@ -213,8 +213,24 @@ void nextTurn(){
     }
 }
 
-void organismManager(){
+void updateOrganismMaturity(){
+    for (int i = 0; i < GARDEN_SIZE; i++) {
+        for (int j = 0; j < GARDEN_SIZE; j++) {
 
+            if(highBed[i][j].type == SLUG) {
+                if (highBed[i][j].s.slugMatureAge < highBed[i][j].age) {
+                    highBed[i][j].isMature = true;
+                    strcpy(highBed[i][j].displayType, " S ");
+                }
+            }
+            if (highBed[i][j].type == FROG){
+                if (highBed[i][j].f.frogMatureAge < highBed[i][j].age) {
+                    highBed[i][j].isMature = true;
+                    strcpy(highBed[i][j].displayType, " F ");
+                }
+            }
+        }
+    }
 }
 
 void rounds(){
@@ -225,6 +241,16 @@ void lettuceMove(){
 
 }
 
-/*int slugMove(direction, int i, int j) {
+struct organism slugMove(int i, int j) {
 
-}*/
+}
+
+/**
+* to clear the terminal to allow for a non-scrolling "animation" of the output.
+*/
+void clear_output(){
+    printf("\e[1;1H\e[2J"); //Using ANSI Escape Sequences (works on many terminals)
+//system("clear"); //Mac or Linux
+system("cls"); //Windows
+//clrscr(); // windows including header file: conio.h
+}

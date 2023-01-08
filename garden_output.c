@@ -8,7 +8,9 @@
 #include "garden.h"
 
 extern struct organism highBed[GARDEN_SIZE][GARDEN_SIZE];
+//extern int day;
 
+#ifndef DEBUG
 void printHighBed() {
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
@@ -17,12 +19,14 @@ void printHighBed() {
         printf("\n");
     }
 }
+#endif //DEBUG
 
 void printDisplayType() {
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
             printf("%s", highBed[i][j].displayType);
         }
+        //printf("%d\n", day);
         printf("\n");
     }
 }
