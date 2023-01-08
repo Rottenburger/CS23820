@@ -12,7 +12,9 @@ int main() {
     //int day = 0; //Timer for each round of the simulation
 
     fillHighBed();
+    createWalls();
     movesManager();
+    //runSimulation(10);
     printDisplayType();
     //openConfig();
 

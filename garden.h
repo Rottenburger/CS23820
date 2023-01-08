@@ -24,7 +24,7 @@ struct slug {
     int slugMatureAge;
 };
 
-struct frog{
+struct frog {
     double frogReproduceProb;
     int frogLifespan;
     int frogMatureAge;
@@ -45,13 +45,14 @@ struct organism {
     int column;
     int age;
     bool isMature;
+    bool hasCompletedTurn;
     type type;
     direction dir;
     char displayType[3];
 
-    struct lettuce;
-    struct slug;
-    struct frog;
+    struct lettuce l;
+    struct slug s;
+    struct frog f;
 };
 
 void fillHighBed();
@@ -59,5 +60,8 @@ void printHighBed();
 void printDisplayType();
 void openConfig();
 void movesManager();
+void createWalls();
+int runSimulation(int i);
+void nextTurn();
 
 #endif //PROJECT_GARDEN_H

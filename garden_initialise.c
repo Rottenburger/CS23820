@@ -14,47 +14,72 @@
  */
 struct organism highBed[GARDEN_SIZE][GARDEN_SIZE];
 
-/*struct organism lettuce = {
-        .growProb = 0.8,
+struct organism newLettuce = {
         .type = LETTUCE,
         .displayType = " O ",
+        .hasCompletedTurn = false,
+
+        .l.growProb = 0.8
 };
 
-struct organism slug = {
-        .column = 11,
-        .row = 11,
-        .growProb = 0.8,
-        .type = LETTUCE,
+struct organism newSlug = {
+        .type = SLUG,
         .displayType = " s ",
+        .dir = EAST,
+        .hasCompletedTurn = false,
+
+        .s.slugLifespan = 16,
+        .s.slugMatureAge = 5,
+        .s.slugReproduceProb = 0.9
 };
 
-struct organism frog = {
-        .column = 11,
-        .row = 11,
-        .growProb = 0.8,
-        .type = LETTUCE,
+struct organism newFrog = {
+        .type = FROG,
         .displayType = " f ",
-};*/
+        .dir = STATIONARY,
+        .hasCompletedTurn = false,
+
+        .f.visionDistance = 2,
+        .f.frogLifespan = 20,
+        .f.frogMatureAge = 5,
+        .f.frogReproduceProb = 0.0
+};
+
+struct organism emptySpace = {
+        .type = EMPTY,
+        .displayType = "   ",
+        .dir = STATIONARY
+};
+
+struct organism wall = {
+        .type = WALL,
+        .displayType = " X ",
+        .dir = STATIONARY
+};
 
 void fillHighBed(){
     //Fill the highbed will empty structs
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
-            highBed[i][j].column = i;
-            highBed[i][j].row = j;
-            highBed[i][j].growProb = 0;
-            highBed[i][j].age = 0;
-            highBed[i][j].hunger = 0;
-            highBed[i][j].isMature = false;
-            highBed[i][j].visionDistance = 0;
-            highBed[i][j].lifespan = 0;
-            strcpy(highBed[i][j].displayType, "   ");
-            highBed[i][j].type = EMPTY;
-            highBed[i][j].dir = STATIONARY;
+            highBed[i][j] = emptySpace;
         }
     }
 
-    //Define the walls of the highbed //TODO print numbered grid
+    //placeholder TODO
+/*    struct organism lettuce;*/
+    /*lettuce.type = LETTUCE;
+    strcpy(lettuce.displayType, " O ");
+    lettuce.column = 11;
+    lettuce.row = 11;
+    lettuce.growProb = 0.8;*/
+
+    highBed[5][5] = newLettuce;
+    highBed[6][7] = newSlug;
+    highBed[2][5] = newFrog;
+}
+
+void createWalls() {
+//Define the walls of the highbed //TODO print numbered grid
     for (int i = 0; i < GARDEN_SIZE; i++) {
         char a[3];
         sprintf(a, "%d", i);
@@ -82,16 +107,4 @@ void fillHighBed(){
         strcpy(highBed[GARDEN_SIZE-1][i].displayType, " X ");
         highBed[GARDEN_SIZE-1][i].type = WALL;
     }
-
-    //placeholder TODO
-/*    struct organism lettuce;*/
-    /*lettuce.type = LETTUCE;
-    strcpy(lettuce.displayType, " O ");
-    lettuce.column = 11;
-    lettuce.row = 11;
-    lettuce.growProb = 0.8;*/
-
-    highBed[5][5] = lettuce;
-    highBed[5][8] = slug;
-    highBed[2][5] = frog;
-}
+};

@@ -9,7 +9,13 @@
 #include <time.h>
 #include <string.h>
 extern struct organism highBed[GARDEN_SIZE][GARDEN_SIZE];
-extern struct organism lettuce; //TODO change l2 to l
+extern struct organism newLettuce; //TODO change l2 to l
+extern struct organism newSlug;
+extern struct organism newFrog;
+extern struct organism emptySpace;
+
+int row;
+int collum;
 
 /**
 * set the random number seed to produce unpredictable random sequences
@@ -47,66 +53,107 @@ double random0to1(){
     return 1;
 }*/
 
-void movesManager(){
+void movesManager() {
     set_random_seed(); //reset seed every move
-    double growChance = 0;
-    int growLocation = 0;
-
-    //Used for checking neighbours on 2D grid
-    int offsetx[] = {0, 1, 1, 1, 0, -1, -1, -1};
-    int offsety[] = {-1, -1, 0, 1, 1, 1, 0, -1};
 
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
+            struct organism directions[8] = {
+                    highBed[i][j - 1], highBed[i + 1][j - 1], highBed[i + 1][j],
+                    highBed[i + 1][j + 1], highBed[i][j + 1], highBed[i - 1][j + 1],
+                    highBed[i - 1][j], highBed[i - 1][j - 1]
+            };
+
             switch (highBed[i][j].type) {
-                case 0: //LETTUCE
+                case LETTUCE:
                     highBed[i][j].age++;
-                    growChance = random0to1();
-                    if(highBed[i][j].growProb > growChance && 0 < highBed[i][j].age){
-                        growLocation = random_range(1, 4);
+                    double growChance = random0to1();
+                    if (highBed[i][j].l.growProb > growChance && highBed[i][j].hasCompletedTurn == false) {
+                        highBed[i][j].hasCompletedTurn = true;
+                        int growLocation = 0;
+                        growLocation = random_range(1, 8);
                         switch (growLocation) {
                             case 1:
-                                if(highBed[i][j+1].type != WALL){
-                                    highBed[i][j+1] = lettuce;
+                                if (highBed[i][j + 1].type == EMPTY) {
+                                    highBed[i][j + 1] = newLettuce; //TODO refactor
+                                    highBed[i][j + 1].hasCompletedTurn = true;
                                 }
                                 break;
                             case 2:
-                                if(highBed[i][j-1].type != WALL){
-                                    highBed[i][j-1] = lettuce;
+                                if (highBed[i][j - 1].type == EMPTY) {
+                                    highBed[i][j - 1] = newLettuce;
+                                    highBed[i][j - 1].hasCompletedTurn = true;
                                 }
                                 break;
                             case 3:
-                                if(highBed[i+1][j].type != WALL){
-                                    highBed[i+1][j] = lettuce;
+                                if (highBed[i + 1][j].type == EMPTY) {
+                                    highBed[i + 1][j] = newLettuce;
+                                    highBed[i + 1][j].hasCompletedTurn = true;
                                 }
                                 break;
                             case 4:
-                                if(highBed[i-1][j].type != WALL){
-                                    highBed[i-1][j] = lettuce;
+                                if (highBed[i - 1][j].type == EMPTY) {
+                                    highBed[i - 1][j] = highBed[i][j];
+                                    highBed[i - 1][j].hasCompletedTurn = true;
+                                }
+                                break;
+                            case 5:
+                                if (highBed[1 + i][1 + j].type == EMPTY) {
+                                    highBed[1 + i][1 + j] = highBed[i][j];
+                                    highBed[1 + i][1 + j].hasCompletedTurn = true;
+                                }
+                                break;
+                            case 6:
+                                if (highBed[1 - i][1 - j].type == EMPTY) {
+                                    highBed[1 - i][1 - j] = highBed[i][j];
+                                    highBed[1 - i][1 - j].hasCompletedTurn = true;
+                                }
+                                break;
+                            case 7:
+                                if (highBed[1 + i][1 - j].type == EMPTY) {
+                                    highBed[1 + i][1 - j] = highBed[i][j];
+                                    highBed[1 + i][1 - j].hasCompletedTurn = true;
+                                }
+                                break;
+                            case 8:
+                                if (highBed[1 - i][1 + j].type == EMPTY) {
+                                    highBed[1 - i][1 + j] = highBed[i][j];
+                                    highBed[1 - i][1 + j].hasCompletedTurn = true;
                                 }
                                 break;
                         }
                     }
                     break;
-                case 1: //SLUG
+                case SLUG:
                     highBed[i][j].age++;
+                    if (highBed[i][j].s.slugMatureAge < highBed[i][j].age) {
 
-                    break;
-                case 2: //FROG
-                    highBed[i][j].age++;
-                    break;
-                case 3: //EMPTY
-                    // Move onto next cell
-                    break;
-                case 4: //WALL
-                    // Move onto next cell
-                    break;
-                default:
-                    printf("error, there appears to be an undefined cell");
-                    break;
-            } 
+
+                        if (highBed[i][j].hasCompletedTurn == false) {
+
+                        }
+                        break;
+                        case FROG:
+                            highBed[i][j].age++;
+                        if (highBed[i][j].hasCompletedTurn == false) {
+                            highBed[i + 1][j] = highBed[i][j];
+                            highBed[i + 1][j].hasCompletedTurn = true;
+                            highBed[i][j] = emptySpace;
+                        }
+                        break;
+                        case EMPTY:
+                            // Move onto next cell
+                            break;
+                        case WALL:
+                            // Move onto next cell
+                            break;
+                        default:
+                            printf("error, there appears to be an undefined cell");
+                        break;
+                    }
+            }
+
         }
-
     }
 }
 
@@ -114,8 +161,17 @@ void movesManager(){
 int runSimulation(int d) {
     for(int i = 0; i < d; i++) {
         movesManager();
+        nextTurn();
     }
     return 0;
+}
+
+void nextTurn(){
+    for (int i = 0; i < GARDEN_SIZE; i++) {
+        for (int j = 0; j < GARDEN_SIZE; j++) {
+            highBed[i][j].hasCompletedTurn = false;
+        }
+    }
 }
 
 void organismManager(){
@@ -129,3 +185,7 @@ void rounds(){
 void lettuceMove(){
 
 }
+
+/*int slugMove(direction, int i, int j) {
+
+}*/
