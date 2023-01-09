@@ -19,7 +19,26 @@ void printHighBed() {
         printf("\n");
     }
 }
+
+void printAge() {
+    for (int i = 0; i < GARDEN_SIZE; i++) {
+        for (int j = 0; j < GARDEN_SIZE; j++) {
+            printf("%d", highBed[i][j].age);
+        }
+        printf("\n");
+    }
+}
 #endif //DEBUG
+
+void printAge() {
+    for (int i = 0; i < GARDEN_SIZE; i++) {
+        for (int j = 0; j < GARDEN_SIZE; j++) {
+            printf(" %d ", highBed[i][j].age);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
 
 void printDisplayType() {
     for (int i = 0; i < GARDEN_SIZE; i++) {

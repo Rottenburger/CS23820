@@ -58,6 +58,7 @@ struct organism {
 //Output functions
 void printHighBed();
 void printDisplayType();
+void printAge();
 
 //Config functions
 void openConfig();

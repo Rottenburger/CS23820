@@ -51,82 +51,88 @@ double random0to1(){
 }*/
 
 void movesManager() {
-    set_random_seed(); //reset seed every move
-
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
-            printDisplayType(); //Used to print the screen after every cell is checked
-            //clear_output(); //Non-scrolling TODO this is important for running it in the terminal
+            set_random_seed(); //reset seed after every cell
+            //printDisplayType(); //Used to print the screen after every cell is checked
+            //printAge();
+#ifndef DEBUG
+            clear_output(); //Makes simulation non-scrolling when run in terminal
+#endif //DEBUG
             if (highBed[i][j].hasCompletedTurn == false) { //If completed turn move on
-                struct organism directions[8] = {
+
+                struct organism directions[8] = { //Hardcoded locations of every neigbouring cell used for slug and lettuce interactions
                         highBed[i][j - 1], highBed[i + 1][j - 1], highBed[i + 1][j],
                         highBed[i + 1][j + 1], highBed[i][j + 1], highBed[i - 1][j + 1],
                         highBed[i - 1][j], highBed[i - 1][j - 1]
                 };
 
-                switch (highBed[i][j].type) {
+                switch (highBed[i][j].type) { //Check type of cell
                     case LETTUCE:
                         highBed[i][j].age++;
                         double growChance = random0to1();
-                        if (highBed[i][j].l.growProb > growChance && highBed[i][j].hasCompletedTurn == false) {
+                        if (highBed[i][j].l.growProb > growChance) {
                             highBed[i][j].hasCompletedTurn = true;
-                            int growLocation = 0;
-                            growLocation = random_range(1, 8);
-                            switch (growLocation) {
-                                case 1:
-                                    if (directions[0].type == EMPTY) {
-                                        directions[0] = newLettuce;
-                                        directions[0].hasCompletedTurn = true;
-                                    }
-                                    break;
-                                case 2:
-                                    if (directions[1].type == EMPTY) {
-                                        directions[1] = newLettuce;
-                                        directions[1].hasCompletedTurn = true;
-                                    }
-                                    break;
-                                case 3:
-                                    if (directions[2].type == EMPTY) {
-                                        directions[2] = newLettuce;
-                                        directions[2].hasCompletedTurn = true;
-                                    }
-                                    break;
-                                case 4:
-                                    if (directions[3].type == EMPTY) {
-                                        directions[3] = newLettuce;
-                                        directions[3].hasCompletedTurn = true;
-                                    }
-                                    break;
-                                case 5:
-                                    if (directions[4].type == EMPTY) {
-                                        directions[4] = newLettuce;
-                                        directions[4].hasCompletedTurn = true;
-                                    }
-                                    break;
-                                case 6:
-                                    if (directions[5].type == EMPTY) {
-                                        directions[5] = newLettuce;
-                                        directions[5].hasCompletedTurn = true;
-                                    }
-                                    break;
-                                case 7:
-                                    if (directions[6].type == EMPTY) {
-                                        directions[6] = newLettuce;
-                                        directions[6].hasCompletedTurn = true;
-                                    }
-                                    break;
-                                case 8:
-                                    if (directions[7].type == EMPTY) {
-                                        directions[7] = newLettuce;
-                                        directions[7].hasCompletedTurn = true;
-                                    }
-                                    break;
+                            int growLocation = random_range(1, 8);
+                            if (directions[growLocation].type == EMPTY) {
+                                directions[growLocation] = newSlug;
                             }
                         }
+
+                        /*switch (growLocation) {
+                            case 1:
+                                if (directions[0].type == EMPTY) {
+                                    directions[0] = newLettuce;
+                                    directions[0].hasCompletedTurn = true;
+                                }
+                                break;
+                            case 2:
+                                if (directions[1].type == EMPTY) {
+                                    directions[1] = newLettuce;
+                                    directions[1].hasCompletedTurn = true;
+                                }
+                                break;
+                            case 3:
+                                if (directions[2].type == EMPTY) {
+                                    directions[2] = newLettuce;
+                                    directions[2].hasCompletedTurn = true;
+                                }
+                                break;
+                            case 4:
+                                if (directions[3].type == EMPTY) {
+                                    directions[3] = newLettuce;
+                                    directions[3].hasCompletedTurn = true;
+                                }
+                                break;
+                            case 5:
+                                if (directions[4].type == EMPTY) {
+                                    directions[4] = newLettuce;
+                                    directions[4].hasCompletedTurn = true;
+                                }
+                                break;
+                            case 6:
+                                if (directions[5].type == EMPTY) {
+                                    directions[5] = newLettuce;
+                                    directions[5].hasCompletedTurn = true;
+                                }
+                                break;
+                            case 7:
+                                if (directions[6].type == EMPTY) {
+                                    directions[6] = newLettuce;
+                                    directions[6].hasCompletedTurn = true;
+                                }
+                                break;
+                            case 8:
+                                if (directions[7].type == EMPTY) {
+                                    directions[7] = newLettuce;
+                                    directions[7].hasCompletedTurn = true;
+                                }
+                                break;
+                        }*/
                         break;
                     case SLUG:
                         highBed[i][j].age++; //Increase age of slug
-                        if (highBed[i][j].age >= highBed[i][j].s.slugLifespan) {
+                        if (highBed[i][j].age >= highBed[i][j].s.slugLifespan) { //Kill slug if too old
                             highBed[i][j] = emptySpace;
                             break;
                         }
@@ -134,30 +140,34 @@ void movesManager() {
                             for (int k = 0; k < 7; k++) {
                                 if (directions[k].type == SLUG && directions[k].isMature) {
                                     int slugSpawnLocation = random_range(0, 7);
-                                    directions[slugSpawnLocation] = newSlug;
+                                    if (directions[slugSpawnLocation].type == EMPTY) {
+                                        directions[slugSpawnLocation] = newSlug;
+                                    }
                                 }
                             }
                         }
                         for (int l = 0; l < 7; l++) { //This handles eating
-                            if (directions[l].type == LETTUCE && highBed[i][j].hasCompletedTurn == false){
+                            if (directions[l].type == LETTUCE && highBed[i][j].hasCompletedTurn == false) {
                                 directions[l] = emptySpace;
                                 directions[l].hasCompletedTurn = true;
+                                break;
                             }
                         }
                         if (highBed[i][j].hasCompletedTurn == false) { //This handles movement if not eaten
                             int moveDir = highBed[i][j].dir;
                             directions[moveDir] = highBed[i][j];
                             highBed[i][j] = emptySpace;
+                            break;
                         }
                         break;
                     case FROG:
                         highBed[i][j].age++; //Increase age of frog
                         highBed[i][j].f.hunger++; //Increase hunger of frog
-                        if (highBed[i][j].age >= highBed[i][j].f.frogLifespan) {
+                        if (highBed[i][j].age >= highBed[i][j].f.frogLifespan) { //Kill frog if too old
                             highBed[i][j] = emptySpace;
                             break;
                         }
-                        if (highBed[i][j].isMature) { //This handles frog reproduction
+                        if (highBed[i][j].isMature) { //This handles frog reproduction //TODO doesn't work with vision atm
                             for (int k = 0; k < 7; k++) {
                                 if (directions[k].type == FROG && directions[k].isMature) {
                                     int slugSpawnLocation = random_range(0, 7);
@@ -165,16 +175,40 @@ void movesManager() {
                                 }
                             }
                         }
-                        for (int l = 0; l < 7; l++) { //This handles eating TODO uses slug logic
-                            if (directions[l].type == SLUG && highBed[i][j].hasCompletedTurn == false){
-                                directions[l] = highBed[i][j];
-                                directions[l].f.hunger = 0;
-                                directions[l].hasCompletedTurn = true;
+                        //This checks every direction as far as the frog can see, if there's
+                        //food the frog will move to that location, removing the slug and reset
+                        //the frog's hunger level
+                        int range = newFrog.f.visionDistance;
+                        for (int l = 1; l <= range; l++) {
+                            if (highBed[i][j + l].type == SLUG && highBed[i][j].hasCompletedTurn == false) {
+                                highBed[i][j + l].f.hunger = 0;
+                                highBed[i][j + l] = highBed[i][j];
+                                highBed[i][j + l] = emptySpace;
+                                break;
                             }
                         }
+                        for (int l = 1; l <= range; l++) {
+                            if (highBed[i + l][j].type == SLUG && highBed[i][j].hasCompletedTurn == false) {
+                                highBed[i + l][j - l].f.hunger = 0;
+                                highBed[i + l][j - l] = highBed[i][j];
+                                highBed[i + l][j - l] = emptySpace;
+                                break;
+                            }
+                        }
+                        for (int l = 1; l <= range; l++) {
+                            if (highBed[i - l][j].type == SLUG && highBed[i][j].hasCompletedTurn == false) {
+                                highBed[i - l][j].f.hunger = 0;
+                                highBed[i - l][j] = highBed[i][j];
+                                highBed[i - l][j] = emptySpace;
+                                break;
+                            }
+                            break;
+                        }
+
                         if (highBed[i][j].hasCompletedTurn == false) { //This handles movement if hungry and no food seen
-                            int moveDir = highBed[i][j].dir;
-                            directions[moveDir] = highBed[i][j];
+                            int hopRange = newFrog.f.visionDistance * 2;
+                            int randomHop = random_range(1, range);
+                            directions[randomHop] = highBed[i][j];
                             highBed[i][j] = emptySpace;
                         }
                         break;
@@ -200,6 +234,8 @@ int runSimulation(int d) {
         movesManager();
         updateOrganismMaturity();
         nextTurn();
+        //clear_output(); //Used for terminal simulation
+        printDisplayType();
         //day++;
     }
     return 0;
@@ -241,8 +277,33 @@ void lettuceMove(){
 
 }
 
-struct organism slugMove(int i, int j) {
+struct organism frogFindFood(int i, int j) {
+    /*int range = newFrog.f.visionDistance;
 
+    for (int k = 1; k <= range; k++) {
+        if(k.type)
+    }
+
+    // Check if the current cell has a neighbor to the south
+    for (int i = 1; i <= range; i++) {
+        if (row + i < GARDEN_SIZE) {
+            neighbor_count++;
+        }
+    }
+
+    // Check if the current cell has a neighbor to the west
+    for (int i = 1; i <= range; i++) {
+        if (col - i >= 0) {
+            neighbor_count++;
+        }
+    }
+
+    // Check if the current cell has a neighbor to the east
+    for (int i = 1; i <= range; i++) {
+        if (col + i < GARDEN_SIZE) {
+            neighbor_count++;
+        }
+    }*/
 }
 
 /**

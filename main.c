@@ -8,15 +8,20 @@ C & C++ module assignment by Thomas Roethenbaugh 11/12/2022
 
 int main() {
     printf("Welcome to highbed simulator!\n");
+    char configName;
+    printf("Which config file do you want to use?\n");
+    //scanf("%s", &configName); //load config
+    printf("Run simulation in rounds mode or moves mode?\n"
+           "Type R or M for desired mode\n");
+    //scanf("%s", &mode); //load desired mode
 
-    //int day = 0; //Timer for each round of the simulation
-
-/*    fillHighBed();
+    fillHighBed();
     createWalls();
     //movesManager();
     runSimulation(100);
-    printDisplayType();*/
-    openConfig();
+    printAge();
+    //printDisplayType();
+    //openConfig();
     //readConfigData();
 
     //print all struct data on the highbed //TODO

@@ -16,8 +16,13 @@ int FROG_LIFESPAN;
 int FROG_HUNGRY;
 int FROG_VISION_DISTANCE;
 
+extern char configName;
+
 void openConfig() {
-    FILE *file = fopen("config1.txt", "r");
+    FILE *file = fopen("config2.txt", "r");
+    char line[100];
+    char value;
+
     if (file == NULL) {
         perror("config file not found");
     }
@@ -25,13 +30,12 @@ void openConfig() {
     char buffer[BUFFER_SIZE];
     while (fgets(buffer, BUFFER_SIZE, file) != NULL) {
         //printf("%s", buffer);
+        value = strtok(NULL, " ");
+        LETTUCE_GROW_PROB = strtod(value, NULL);
+
+
     }
     fclose(file);
-
-    char *s;
-    //sscanf(BUFFER_SIZE, "%d", &SLUG_MATURE_AGE);
-    strtol("SLUG_MATURE_AGE", &s, BUFFER_SIZE);
-    printf("%d", SLUG_MATURE_AGE);
 }
 
 void readConfigData() {
