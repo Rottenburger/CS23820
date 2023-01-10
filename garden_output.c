@@ -7,9 +7,15 @@
 #include <stdio.h>
 #include "garden.h"
 
+/**
+ * 2D grid variable containing all the data to printed
+ */
 extern struct organism highBed[GARDEN_SIZE][GARDEN_SIZE];
-//extern int day;
 
+/**
+ * These are alternative methods that I used for printing other information about
+ * each organism in order to debug my program.
+ */
 #ifndef DEBUG
 void printHighBed() {
     for (int i = 0; i < GARDEN_SIZE; i++) {
@@ -30,6 +36,9 @@ void printAge() {
 }
 #endif //DEBUG
 
+/**
+ * Prints every cells age to the terminal
+ */
 void printAge() {
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
@@ -39,13 +48,14 @@ void printAge() {
     }
     printf("\n");
 }
-
+/**
+ * Prints the symbols used for viewing the simulation
+ */
 void printDisplayType() {
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
             printf("%s", highBed[i][j].displayType);
         }
-        //printf("%d\n", day);
         printf("\n");
     }
 }

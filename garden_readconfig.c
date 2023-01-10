@@ -6,6 +6,9 @@
 #include <string.h>
 #include "garden.h"
 
+/**
+ * All the variables that are contained in the config file
+ */
 double LETTUCE_GROW_PROB;
 double SLUG_REPRODUCE_PROB;
 double FROG_REPRODUCE_PROB;
@@ -18,6 +21,9 @@ int FROG_VISION_DISTANCE;
 
 extern char configName;
 
+/**
+ * Reads entire config file and prints it to terminal
+ */
 void openConfig() {
     FILE *file = fopen("config2.txt", "r");
     char line[100];
@@ -37,7 +43,9 @@ void openConfig() {
     }
     fclose(file);
 }
-
+/**
+ * Tries to read config file data into variables that can be used by garden_initialise.c
+ */
 void readConfigData() {
     float a;
     float b;

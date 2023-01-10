@@ -20,16 +20,25 @@ typedef enum {NORTH, EAST, SOUTH, WEST, STATIONARY} direction;
  */
 typedef enum {LETTUCE, SLUG, FROG, EMPTY, WALL} type;
 
+/**
+ * Lettuce struct that only contains starting growth probability
+ */
 struct lettuce {
     double growProb;
 };
 
+/**
+ * Slug struct information used in simulation
+ */
 struct slug {
     double slugReproduceProb;
     int slugLifespan;
     int slugMatureAge;
 };
 
+/**
+ * Frog struct information used in simulation
+ */
 struct frog {
     double frogReproduceProb;
     int frogLifespan;

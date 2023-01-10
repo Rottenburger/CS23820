@@ -3,7 +3,6 @@ C & C++ module assignment by Thomas Roethenbaugh 11/12/2022
 */
 
 #include <stdio.h>
-#include <stdbool.h>
 #include "garden.h"
 
 int main() {
@@ -18,13 +17,13 @@ int main() {
     fillHighBed();
     createWalls();
     //movesManager();
-    runSimulation(100);
+    runSimulation(10);
     printAge();
     //printDisplayType();
     //openConfig();
     //readConfigData();
 
-    //print all struct data on the highbed //TODO
+    //print all struct data on the highbed
 #ifndef DEBUG
     printHighBed();
 #endif //DEBUG

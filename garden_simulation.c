@@ -7,6 +7,11 @@
 #include "garden.h"
 #include <time.h>
 #include <string.h>
+
+/**
+ * These are all the variables created in the garden_initialise.c file being
+ * used in the simulation.
+ */
 extern struct organism highBed[GARDEN_SIZE][GARDEN_SIZE];
 extern struct organism newLettuce; //TODO change l2 to l
 extern struct organism newSlug;
@@ -39,35 +44,34 @@ double random0to1(){
     return ((double)rand())/RAND_MAX;
 }
 
-/*bool isWall(int i, int j, direction dir) {
-    int neighbors[4][2] = {{i-1, j}, {i+1, j}, {i, j-1}, {i, j+1}};
-    for (int k = 0; k < 4; k++) {
-        if(neighbors[k][k].)
-    }
-
-        return 0;
-    return 1;
-}*/
-
+/**
+ * This is the main crux of the program. I am also aware of how bloated this particular function is
+ * but I didn't have time to separate its functionality.
+ * Essentially, this function goes through every cell in the 2D grid one by one. It checks what is in
+ * each cell of the 2D grid using a switch statement then decides what to simulate based on the type
+ * of organism it lands on. If it lands on a wall or empty type it moves onto the next cell, if it lands
+ * on different type it will then try to simulate that particular organisms functionality.
+ */
 void movesManager() {
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
-            set_random_seed(); //reset seed after every cell
-            int growLocation = 0;
-            int slugSpawnLocation = 0;
-            int frogSpawnLocation = 0;
 
-            struct organism directions[8] = { //Hardcoded locations of every neigbouring cell used for slug and lettuce interactions
-                    highBed[i][j - 1], highBed[i + 1][j - 1], highBed[i + 1][j],
-                    highBed[i + 1][j + 1], highBed[i][j + 1], highBed[i - 1][j + 1],
-                    highBed[i - 1][j], highBed[i - 1][j - 1]
-            };
             //printDisplayType(); //Used to print the screen after every cell is checked
             //printAge();
 #ifndef DEBUG
             clear_output(); //Makes simulation non-scrolling when run in terminal
 #endif //DEBUG
             if (highBed[i][j].hasCompletedTurn == false) { //If completed turn move on
+                set_random_seed(); //reset seed after every cell
+                int growLocation = 0;
+                int slugSpawnLocation = 0;
+                int frogSpawnLocation = 0;
+
+                struct organism directions[8] = { //Hardcoded locations of every neigbouring cell used for slug and lettuce interactions
+                        highBed[i][j - 1], highBed[i + 1][j - 1], highBed[i + 1][j],
+                        highBed[i + 1][j + 1], highBed[i][j + 1], highBed[i - 1][j + 1],
+                        highBed[i - 1][j], highBed[i - 1][j - 1]
+                };
 
                 switch (highBed[i][j].type) { //Check type of cell
                     case LETTUCE:
@@ -423,9 +427,13 @@ void movesManager() {
         }
     }
 }
-
-
-//Handles input for number of days to run
+/**
+ * This function takes an int input to calculate the number of simulations to be run
+ * by the program. It also handles resting the turns for each organism and updating
+ * the maturity of slugs and frogs.
+ * @param d number of simulations
+ * @return return 0 if simulation finished
+ */
 int runSimulation(int d) {
     for(int i = 0; i < d; i++) {
         /*char prev = 0;
@@ -452,7 +460,9 @@ int runSimulation(int d) {
     }
     return 0;
 }
-
+/**
+ * Resets every cells hasCompletedTurn parameter
+ */
 void nextTurn(){
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
@@ -460,7 +470,9 @@ void nextTurn(){
         }
     }
 }
-
+/**
+ * Updates every frog and slugs maturity status and display
+ */
 void updateOrganismMaturity(){
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
@@ -480,44 +492,6 @@ void updateOrganismMaturity(){
         }
     }
 }
-
-void rounds(){
-
-}
-
-void lettuceMove(){
-
-}
-
-struct organism frogFindFood(int i, int j) {
-    /*int range = newFrog.f.visionDistance;
-
-    for (int k = 1; k <= range; k++) {
-        if(k.type)
-    }
-
-    // Check if the current cell has a neighbor to the south
-    for (int i = 1; i <= range; i++) {
-        if (row + i < GARDEN_SIZE) {
-            neighbor_count++;
-        }
-    }
-
-    // Check if the current cell has a neighbor to the west
-    for (int i = 1; i <= range; i++) {
-        if (col - i >= 0) {
-            neighbor_count++;
-        }
-    }
-
-    // Check if the current cell has a neighbor to the east
-    for (int i = 1; i <= range; i++) {
-        if (col + i < GARDEN_SIZE) {
-            neighbor_count++;
-        }
-    }*/
-}
-
 /**
 * to clear the terminal to allow for a non-scrolling "animation" of the output.
 */

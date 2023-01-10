@@ -17,7 +17,10 @@ config2.txt
 config3.txt
 
 Important functions:
-
+movesManager - Loops through the 2D grid every turn to simulate the highbed
+printDisplayType - Used to display the highbed and called every round of the simulation
+runSimulation - Manages each round of the simulation
+fillHighBed - Fills the high bed with empty cells and organisms like lettuce, slugs and frogs
 
 Known bugs:
 -Frog never moves
