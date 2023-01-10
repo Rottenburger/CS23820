@@ -23,6 +23,6 @@ runSimulation - Manages each round of the simulation
 fillHighBed - Fills the high bed with empty cells and organisms like lettuce, slugs and frogs
 
 Known bugs:
--Frog never moves
+-Frog never moves despite program saying it does
 -Read config not working
 -Slugs sometimes move incorrectly

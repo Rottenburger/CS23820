@@ -13,7 +13,7 @@
  * used in the simulation.
  */
 extern struct organism highBed[GARDEN_SIZE][GARDEN_SIZE];
-extern struct organism newLettuce; //TODO change l2 to l
+extern struct organism newLettuce;
 extern struct organism newSlug;
 extern struct organism newFrog;
 extern struct organism emptySpace;
