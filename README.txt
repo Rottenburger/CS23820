@@ -25,3 +25,4 @@ fillHighBed - Fills the high bed with empty cells and organisms like lettuce, sl
 Known bugs:
 -Frog never moves
 -Read config not working
+-Slugs sometimes move incorrectly

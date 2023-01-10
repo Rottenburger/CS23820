@@ -74,6 +74,8 @@ struct organism {
     struct frog f;
 };
 
+extern bool movesMode;
+
 //Output functions
 void printHighBed();
 void printDisplayType();
@@ -93,3 +95,4 @@ void movesManager();
 void nextTurn();
 void updateOrganismMaturity();
 void clear_output();
+void checkIfEnterIsPressed();

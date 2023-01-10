@@ -35,9 +35,9 @@ void openConfig() {
 
     char buffer[BUFFER_SIZE];
     while (fgets(buffer, BUFFER_SIZE, file) != NULL) {
-        //printf("%s", buffer);
-        value = strtok(NULL, " ");
-        LETTUCE_GROW_PROB = strtod(value, NULL);
+        printf("%s", buffer);
+/*        value = strtok(NULL, " ");
+        LETTUCE_GROW_PROB = strtod(value, NULL);*/
 
 
     }

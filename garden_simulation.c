@@ -55,12 +55,9 @@ double random0to1(){
 void movesManager() {
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
-
-            //printDisplayType(); //Used to print the screen after every cell is checked
-            //printAge();
-#ifndef DEBUG
-            clear_output(); //Makes simulation non-scrolling when run in terminal
-#endif //DEBUG
+#ifndef TERMINAL_MODE
+            //clear_output(); //Makes simulation non-scrolling when run in terminal
+#endif //TERMINAL_MODE
             if (highBed[i][j].hasCompletedTurn == false) { //If completed turn move on
                 set_random_seed(); //reset seed after every cell
                 int growLocation = 0;
@@ -82,41 +79,89 @@ void movesManager() {
                             if (highBed[i][j - 1].type == EMPTY) {
                                 highBed[i][j - 1] = newLettuce;
                                 highBed[i][j - 1].hasCompletedTurn = true;
+                                if(movesMode){
+                                    printDisplayType();
+                                    printf("Lettuce grew!\n");
+                                    printf("Press enter to continue\n");
+                                    checkIfEnterIsPressed();
+                                }
                                 break;
                             }
                             if (highBed[i + 1][j - 1].type == EMPTY) {
                                 highBed[i + 1][j - 1] = newLettuce;
                                 highBed[i + 1][j - 1].hasCompletedTurn = true;
+                                if(movesMode){
+                                    printDisplayType();
+                                    printf("Lettuce grew!\n");
+                                    printf("Press enter to continue\n");
+                                    checkIfEnterIsPressed();
+                                }
                                 break;
                             }
                             if (highBed[i + 1][j].type == EMPTY) {
                                 highBed[i + 1][j] = newLettuce;
                                 highBed[i + 1][j].hasCompletedTurn = true;
+                                if(movesMode){
+                                    printDisplayType();
+                                    printf("Lettuce grew!\n");
+                                    printf("Press enter to continue\n");
+                                    checkIfEnterIsPressed();
+                                }
                                 break;
                             }
                             if (highBed[i + 1][j + 1].type == EMPTY) {
                                 highBed[i + 1][j + 1] = newLettuce;
                                 highBed[i + 1][j + 1].hasCompletedTurn = true;
+                                if(movesMode){
+                                    printDisplayType();
+                                    printf("Lettuce grew!\n");
+                                    printf("Press enter to continue\n");
+                                    checkIfEnterIsPressed();
+                                }
                                 break;
                             }
                             if (highBed[i][j + 1].type == EMPTY) {
                                 highBed[i][j + 1] = newLettuce;
                                 highBed[i][j + 1].hasCompletedTurn = true;
+                                if(movesMode){
+                                    printDisplayType();
+                                    printf("Lettuce grew!\n");
+                                    printf("Press enter to continue\n");
+                                    checkIfEnterIsPressed();
+                                }
                                 break;
                             }
                             if (highBed[i - 1][j + 1].type == EMPTY) {
                                 highBed[i - 1][j + 1] = newLettuce;
                                 highBed[i - 1][j + 1].hasCompletedTurn = true;
+                                if(movesMode){
+                                    printDisplayType();
+                                    printf("Lettuce grew!\n");
+                                    printf("Press enter to continue\n");
+                                    checkIfEnterIsPressed();
+                                }
                                 break;
                             }
                             if (highBed[i - 1][j].type == EMPTY) {
                                 highBed[i - 1][j] = newLettuce;
                                 highBed[i - 1][j].hasCompletedTurn = true;
+                                if(movesMode){
+                                    printDisplayType();
+                                    printf("Lettuce grew!\n");
+                                    printf("Press enter to continue\n");
+                                    checkIfEnterIsPressed();
+                                }
                                 break;
                             }
                             if (highBed[i - 1][j - 1].type == EMPTY) {
                                 highBed[i - 1][j - 1] = newLettuce;
                                 highBed[i - 1][j - 1].hasCompletedTurn = true;
+                                if(movesMode){
+                                    printDisplayType();
+                                    printf("Lettuce grew!\n");
+                                    printf("Press enter to continue\n");
+                                    checkIfEnterIsPressed();
+                                }
                                 break;
                             }
                         }
@@ -125,6 +170,12 @@ void movesManager() {
                         highBed[i][j].age++; //Increase age of slug
                         if (highBed[i][j].age >= highBed[i][j].s.slugLifespan) { //Kill slug if too old
                             highBed[i][j] = emptySpace;
+                            if(movesMode){
+                                printDisplayType();
+                                printf("Slug died of old age\n");
+                                printf("Press enter to continue\n");
+                                checkIfEnterIsPressed();
+                            }
                             break;
                         }
                         //This handles eating
@@ -132,35 +183,72 @@ void movesManager() {
                             if (highBed[i][j + 1].type == LETTUCE && highBed[i][j].hasCompletedTurn == false) {
                                 highBed[i][j + 1] = emptySpace;
                                 highBed[i][j].hasCompletedTurn = true;
+                                if(movesMode){
+                                    printDisplayType();
+                                    printf("Slug ate nearby lettuce\n");
+                                    printf("Press enter to continue\n");
+                                    checkIfEnterIsPressed();
+                                }
                                 break;
                             }
                             if (highBed[i][j - 1].type == LETTUCE && highBed[i][j].hasCompletedTurn == false) {
                                 highBed[i][j - 1] = emptySpace;
                                 highBed[i][j].hasCompletedTurn = true;
+                                if(movesMode){
+                                    printDisplayType();
+                                    printf("Slug ate nearby lettuce\n");
+                                    printf("Press enter to continue\n");
+                                    checkIfEnterIsPressed();
+                                }
                                 break;
                             }
                             if (highBed[i + 1][j - 1].type == LETTUCE && highBed[i][j].hasCompletedTurn == false) {
                                 highBed[i + 1][j - 1] = emptySpace;
                                 highBed[i][j].hasCompletedTurn = true;
+                                if(movesMode){
+                                    printDisplayType();
+                                    printf("Slug ate nearby lettuce\n");
+                                    printf("Press enter to continue\n");
+                                    checkIfEnterIsPressed();
+                                }
                                 break;
                             }
                             if (highBed[i - 1][j + 1].type == LETTUCE && highBed[i][j].hasCompletedTurn == false) {
                                 highBed[i - 1][j + 1] = emptySpace;
                                 highBed[i][j].hasCompletedTurn = true;
+                                if(movesMode){
+                                    printDisplayType();
+                                    printf("Slug ate nearby lettuce\n");
+                                    printf("Press enter to continue\n");
+                                    checkIfEnterIsPressed();
+                                }
                                 break;
                             }
                             if (highBed[i - 1][j].type == LETTUCE && highBed[i][j].hasCompletedTurn == false) {
                                 highBed[i - 1][j] = emptySpace;
                                 highBed[i][j].hasCompletedTurn = true;
+                                if(movesMode){
+                                    printDisplayType();
+                                    printf("Slug ate nearby lettuce\n");
+                                    printf("Press enter to continue\n");
+                                    checkIfEnterIsPressed();
+                                }
                                 break;
                             }
                             if (highBed[i + 1][j].type == LETTUCE && highBed[i][j].hasCompletedTurn == false) {
                                 highBed[i + 1][j] = emptySpace;
                                 highBed[i][j].hasCompletedTurn = true;
+                                if(movesMode){
+                                    printDisplayType();
+                                    printf("Slug ate nearby lettuce\n");
+                                    printf("Press enter to continue\n");
+                                    checkIfEnterIsPressed();
+                                }
                                 break;
                             }
                         }
-                        if (highBed[i][j].isMature) { //This handles slug reproduction
+                        double slugReprChance = random0to1(); //This handles slug reproduction
+                        if (highBed[i][j].isMature && slugReprChance < highBed[i][j].s.slugReproduceProb) {
                             for (int k = 0; k < 7; k++) {
                                 if (directions[k].type == SLUG && directions[k].isMature) {
                                     slugSpawnLocation = random_range(0, 7);
@@ -172,6 +260,12 @@ void movesManager() {
                                                 highBed[i][j - k].dir = slugSpawnDir;
                                                 highBed[i][j - k].hasCompletedTurn = true;
                                                 highBed[i][j].hasCompletedTurn = true;
+                                                if(movesMode){
+                                                    printDisplayType();
+                                                    printf("Slug reproduced\n");
+                                                    printf("Press enter to continue\n");
+                                                    checkIfEnterIsPressed();
+                                                }
                                             }
                                             break;
                                         case 1:
@@ -180,6 +274,12 @@ void movesManager() {
                                                 highBed[i + k][j - k].dir = slugSpawnDir;
                                                 highBed[i + k][j - k].hasCompletedTurn = true;
                                                 highBed[i][j].hasCompletedTurn = true;
+                                                if(movesMode){
+                                                    printDisplayType();
+                                                    printf("Slug reproduced\n");
+                                                    printf("Press enter to continue\n");
+                                                    checkIfEnterIsPressed();
+                                                }
                                             }
                                             break;
                                         case 2:
@@ -188,6 +288,12 @@ void movesManager() {
                                                 highBed[i + k][j].dir = slugSpawnDir;
                                                 highBed[i + k][j].hasCompletedTurn = true;
                                                 highBed[i][j].hasCompletedTurn = true;
+                                                if(movesMode){
+                                                    printDisplayType();
+                                                    printf("Slug reproduced\n");
+                                                    printf("Press enter to continue\n");
+                                                    checkIfEnterIsPressed();
+                                                }
                                             }
                                             break;
                                         case 3:
@@ -196,6 +302,12 @@ void movesManager() {
                                                 highBed[i + k][j + k].dir = slugSpawnDir;
                                                 highBed[i + k][j + k].hasCompletedTurn = true;
                                                 highBed[i][j].hasCompletedTurn = true;
+                                                if(movesMode){
+                                                    printDisplayType();
+                                                    printf("Slug reproduced\n");
+                                                    printf("Press enter to continue\n");
+                                                    checkIfEnterIsPressed();
+                                                }
                                             }
                                             break;
                                         case 4:
@@ -204,6 +316,12 @@ void movesManager() {
                                                 highBed[i][j + k].dir = slugSpawnDir;
                                                 highBed[i][j + k].hasCompletedTurn = true;
                                                 highBed[i][j].hasCompletedTurn = true;
+                                                if(movesMode){
+                                                    printDisplayType();
+                                                    printf("Slug reproduced\n");
+                                                    printf("Press enter to continue\n");
+                                                    checkIfEnterIsPressed();
+                                                }
                                             }
                                             break;
                                         case 5:
@@ -212,6 +330,12 @@ void movesManager() {
                                                 highBed[i - k][j + k].dir = slugSpawnDir;
                                                 highBed[i - k][j + k].hasCompletedTurn = true;
                                                 highBed[i][j].hasCompletedTurn = true;
+                                                if(movesMode){
+                                                    printDisplayType();
+                                                    printf("Slug reproduced\n");
+                                                    printf("Press enter to continue\n");
+                                                    checkIfEnterIsPressed();
+                                                }
                                             }
                                             break;
                                         case 6:
@@ -220,6 +344,12 @@ void movesManager() {
                                                 highBed[i - k][j].dir = slugSpawnDir;
                                                 highBed[i - k][j].hasCompletedTurn = true;
                                                 highBed[i][j].hasCompletedTurn = true;
+                                                if(movesMode){
+                                                    printDisplayType();
+                                                    printf("Slug reproduced\n");
+                                                    printf("Press enter to continue\n");
+                                                    checkIfEnterIsPressed();
+                                                }
                                             }
                                             break;
                                         case 7:
@@ -228,6 +358,12 @@ void movesManager() {
                                                 highBed[i - k][j - k].dir = slugSpawnDir;
                                                 highBed[i - k][j - k].hasCompletedTurn = true;
                                                 highBed[i][j].hasCompletedTurn = true;
+                                                if(movesMode){
+                                                    printDisplayType();
+                                                    printf("Slug reproduced\n");
+                                                    printf("Press enter to continue\n");
+                                                    checkIfEnterIsPressed();
+                                                }
                                             }
                                             break;
                                         default:
@@ -244,6 +380,12 @@ void movesManager() {
                                         highBed[i][j - 1].hasCompletedTurn = true;
                                         highBed[i][j - 1] = highBed[i][j];
                                         highBed[i][j] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Slug moved\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                     highBed[i][j].dir = random_range(NORTH, WEST);
@@ -253,6 +395,12 @@ void movesManager() {
                                         highBed[i + 1][j - 1].hasCompletedTurn = true;
                                         highBed[i + 1][j - 1] = highBed[i][j];
                                         highBed[i][j] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Slug moved\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                     highBed[i][j].dir = random_range(NORTH, WEST);
@@ -262,6 +410,12 @@ void movesManager() {
                                         highBed[i + 1][j].hasCompletedTurn = true;
                                         highBed[i + 1][j] = highBed[i][j];
                                         highBed[i][j] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Slug moved\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                     highBed[i][j].dir = random_range(NORTH, WEST);
@@ -271,6 +425,12 @@ void movesManager() {
                                         highBed[i + 1][j + 1].hasCompletedTurn = true;
                                         highBed[i + 1][j + 1] = highBed[i][j];
                                         highBed[i][j] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Slug moved\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                     highBed[i][j].dir = random_range(NORTH, WEST);
@@ -280,6 +440,12 @@ void movesManager() {
                                         highBed[i][j + 1].hasCompletedTurn = true;
                                         highBed[i][j + 1] = highBed[i][j];
                                         highBed[i][j] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Slug moved\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                     highBed[i][j].dir = random_range(NORTH, WEST);
@@ -289,6 +455,12 @@ void movesManager() {
                                         highBed[i - 1][j + 1].hasCompletedTurn = true;
                                         highBed[i - 1][j + 1] = highBed[i][j];
                                         highBed[i][j] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Slug moved\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                     highBed[i][j].dir = random_range(NORTH, WEST);
@@ -298,6 +470,12 @@ void movesManager() {
                                         highBed[i - 1][j].hasCompletedTurn = true;
                                         highBed[i - 1][j] = highBed[i][j];
                                         highBed[i][j] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Slug moved\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                     highBed[i][j].dir = random_range(NORTH, WEST);
@@ -307,12 +485,30 @@ void movesManager() {
                                         highBed[i - 1][j - 1].hasCompletedTurn = true;
                                         highBed[i - 1][j - 1] = highBed[i][j];
                                         highBed[i][j] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Slug moved\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                     highBed[i][j].dir = random_range(NORTH, WEST);
+                                    if(movesMode){
+                                        printDisplayType();
+                                        printf("Slug changed direction\n");
+                                        printf("Press enter to continue\n");
+                                        checkIfEnterIsPressed();
+                                    }
                                     break;
                                 default:
                                     highBed[i][j].dir = random_range(NORTH, WEST);
+                                    if(movesMode){
+                                        printDisplayType();
+                                        printf("Slug changed direction\n");
+                                        printf("Press enter to continue\n");
+                                        checkIfEnterIsPressed();
+                                    }
                                     break;
                             }
                             break;
@@ -321,9 +517,16 @@ void movesManager() {
                             highBed[i][j].f.hunger++; //Increase hunger of frog
                             if (highBed[i][j].age >= highBed[i][j].f.frogLifespan) { //Kill frog if too old
                                 highBed[i][j] = emptySpace;
+                                if(movesMode){
+                                    printDisplayType();
+                                    printf("Frog died of old age\n");
+                                    printf("Press enter to continue\n");
+                                    checkIfEnterIsPressed();
+                                }
                                 break;
                             }
-                            if (highBed[i][j].isMature) { //This handles frog reproduction //TODO doesn't work with vision atm
+                            double frogReprChance = random0to1();
+                            if (highBed[i][j].isMature && frogReprChance < highBed[i][j].f.frogReproduceProb) { //This handles frog reproduction //TODO doesn't work with vision atm
                                 for (int k = 0; k < 7; k++) {
                                     if (directions[k].type == FROG && directions[k].isMature) {
                                         frogSpawnLocation = random_range(0, 7);
@@ -341,36 +544,72 @@ void movesManager() {
                                         highBed[i][j + l].f.hunger = 0;
                                         highBed[i][j + l] = highBed[i][j];
                                         highBed[i][j + l] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Frog ate slug\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                     if (highBed[i][j - l].type == SLUG) {
                                         highBed[i][j - l].f.hunger = 0;
                                         highBed[i][j - l] = highBed[i][j];
                                         highBed[i][j - l] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Frog ate slug\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                     if (highBed[i + l][j - l].type == SLUG) {
                                         highBed[i + l][j - l].f.hunger = 0;
                                         highBed[i + l][j - l] = highBed[i][j];
                                         highBed[i + l][j - l] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Frog ate slug\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                     if (highBed[i - l][j + l].type == SLUG) {
                                         highBed[i - l][j + l].f.hunger = 0;
                                         highBed[i - l][j + l] = highBed[i][j];
                                         highBed[i - l][j + l] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Frog ate slug\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                     if (highBed[i - l][j].type == SLUG) {
                                         highBed[i - l][j].f.hunger = 0;
                                         highBed[i - l][j] = highBed[i][j];
                                         highBed[i - l][j] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Frog ate slug\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                     if (highBed[i + l][j].type == SLUG) {
                                         highBed[i + l][j].f.hunger = 0;
                                         highBed[i + l][j] = highBed[i][j];
                                         highBed[i + l][j] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Frog ate slug\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                 }
@@ -382,31 +621,67 @@ void movesManager() {
                                     if (highBed[i][j + l].type == EMPTY) {
                                         highBed[i][j + l] = highBed[i][j];
                                         highBed[i][j + l] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Frog moved\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                     if (highBed[i][j - l].type == EMPTY) {
                                         highBed[i][j - l] = highBed[i][j];
                                         highBed[i][j - l] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Frog moved\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                     if (highBed[i + l][j - l].type == EMPTY) {
                                         highBed[i + l][j - l] = highBed[i][j];
                                         highBed[i + l][j - l] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Frog moved\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                     if (highBed[i - l][j + l].type == EMPTY) {
                                         highBed[i - l][j + l] = highBed[i][j];
                                         highBed[i - l][j + l] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Frog moved\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                     if (highBed[i - l][j].type == EMPTY) {
                                         highBed[i - l][j] = highBed[i][j];
                                         highBed[i - l][j] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Frog moved\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                     if (highBed[i + l][j].type == EMPTY) {
                                         highBed[i + l][j] = highBed[i][j];
                                         highBed[i + l][j] = emptySpace;
+                                        if(movesMode){
+                                            printDisplayType();
+                                            printf("Frog moved\n");
+                                            printf("Press enter to continue\n");
+                                            checkIfEnterIsPressed();
+                                        }
                                         break;
                                     }
                                 }
@@ -436,27 +711,16 @@ void movesManager() {
  */
 int runSimulation(int d) {
     for(int i = 0; i < d; i++) {
-        /*char prev = 0;
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF) {
 
-        while(1)
-        {
-            char c = getchar();
-
-            if(c == '\n' && prev == c)
-            {*/
-                movesManager();
-                updateOrganismMaturity();
-                nextTurn();
-                //clear_output(); //Used for terminal simulation
-                printDisplayType();
-/*        printf("Run next round?\n"); //TODO ask for next simulation round
-        char input;
-        scanf("%s", &input); //load config*/
-                /*break;
-            }
-
-            prev = c;
-        }*/
+        }
+        movesManager();
+        updateOrganismMaturity();
+        nextTurn();
+        //clear_output(); //Used for terminal simulation
+        printDisplayType();
+        printf("Press enter to run the next round\n");
     }
     return 0;
 }
@@ -500,4 +764,10 @@ void clear_output(){
 //system("clear"); //Mac or Linux
 system("cls"); //Windows
 //clrscr(); // windows including header file: conio.h
+}
+void checkIfEnterIsPressed(){
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {
+
+    }
 }
