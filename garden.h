@@ -3,14 +3,21 @@
 //
 #define DEBUG
 
-#define GARDEN_SIZE 12
+#define GARDEN_SIZE 13
 #define BUFFER_SIZE 1024
 
 #include <stdbool.h>
 
-//int day; //Timer for each round of the simulation
-
-typedef enum {NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST, STATIONARY} direction;
+/**
+ * Direction enum is used by the slugs to handle movement.
+ * It is also used by lettuce to determine growth direction.
+ */
+typedef enum {NORTH, EAST, SOUTH, WEST, STATIONARY} direction;
+/**
+ * Type enum used to determine the type of each cell on the
+ * grid, the simulation uses this to quickly figure out what
+ * is contained in neighbouring cells.
+ */
 typedef enum {LETTUCE, SLUG, FROG, EMPTY, WALL} type;
 
 struct lettuce {
@@ -32,13 +39,16 @@ struct frog {
 };
 
 /**
- * This structure forms the basis for all the organisms in
- * the simulation. It contains all the paramenters for each
+ * This structure forms the basis for all the organisms and cells in
+ * the simulation. It contains all the parameters for each
  * type of creature which could get confusing if more creatures
- * or paramenters are added. However, given the minimal number
- * it should be sufficent for now.
+ * or parameters are added. However, given the minimal number
+ * it should be sufficient for now.
  * Varibles include its location, direction, type, display type
  * (used for printing) etc.
+ * It also contains structs of each type of organism as parameters,
+ * this allows the 2D grid to contain any type of organism without
+ * the need to track each one.
  */
 struct organism {
     int row;

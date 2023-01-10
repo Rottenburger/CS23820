@@ -19,7 +19,7 @@ struct organism newLettuce = {
         .displayType = " O ",
         .hasCompletedTurn = false,
 
-        .l.growProb = 0.8
+        .l.growProb = 0.0
 };
 
 struct organism newSlug = {
@@ -48,13 +48,15 @@ struct organism newFrog = {
 struct organism emptySpace = {
         .type = EMPTY,
         .displayType = "   ",
-        .dir = STATIONARY
+        .dir = STATIONARY,
+        .hasCompletedTurn = false
 };
 
 struct organism wall = {
         .type = WALL,
         .displayType = " X ",
-        .dir = STATIONARY
+        .dir = STATIONARY,
+        .hasCompletedTurn = false
 };
 
 void fillHighBed(){
@@ -67,38 +69,28 @@ void fillHighBed(){
 
     //placeholder TODO
 
-    highBed[5][5] = newLettuce;
-    highBed[6][7] = newSlug;
-    highBed[2][5] = newFrog;
+    highBed[11][11] = newLettuce;
+    highBed[6][2] = newSlug;
+    highBed[5][10] = newSlug;
+    highBed[2][6] = newSlug;
+    highBed[1][1] = newFrog;
 }
 
 void createWalls() {
 //Define the walls of the highbed //TODO print numbered grid
     for (int i = 0; i < GARDEN_SIZE; i++) {
-        char a[3];
-        sprintf(a, "%d", i);
-        strcpy(highBed[i][0].displayType, " X ");
-        highBed[i][0].type = WALL;
+        highBed[i][0] = wall;
     }
 
     for (int i = 0; i < GARDEN_SIZE; i++) {
-        char a[3];
-        sprintf(a, "%d", i);
-        strcpy(highBed[0][i].displayType, " X ");
-        highBed[0][i].type = WALL;
+        highBed[0][i] = wall;
     }
 
     for (int i = 0; i < GARDEN_SIZE; i++) {
-        char a[3];
-        sprintf(a, "%d", i);
-        strcpy(highBed[i][GARDEN_SIZE-1].displayType, " X ");
-        highBed[i][GARDEN_SIZE-1].type = WALL;
+        highBed[i][GARDEN_SIZE-1] = wall;
     }
 
     for (int i = 0; i < GARDEN_SIZE; i++) {
-        char a[3];
-        sprintf(a, "%d", i);
-        strcpy(highBed[GARDEN_SIZE-1][i].displayType, " X ");
-        highBed[GARDEN_SIZE-1][i].type = WALL;
+        highBed[GARDEN_SIZE-1][i] = wall;
     }
 };

@@ -12,7 +12,6 @@ extern struct organism newLettuce; //TODO change l2 to l
 extern struct organism newSlug;
 extern struct organism newFrog;
 extern struct organism emptySpace;
-//extern int day = 0;
 
 /**
 * set the random number seed to produce unpredictable random sequences
@@ -54,6 +53,15 @@ void movesManager() {
     for (int i = 0; i < GARDEN_SIZE; i++) {
         for (int j = 0; j < GARDEN_SIZE; j++) {
             set_random_seed(); //reset seed after every cell
+            int growLocation = 0;
+            int slugSpawnLocation = 0;
+            int frogSpawnLocation = 0;
+
+            struct organism directions[8] = { //Hardcoded locations of every neigbouring cell used for slug and lettuce interactions
+                    highBed[i][j - 1], highBed[i + 1][j - 1], highBed[i + 1][j],
+                    highBed[i + 1][j + 1], highBed[i][j + 1], highBed[i - 1][j + 1],
+                    highBed[i - 1][j], highBed[i - 1][j - 1]
+            };
             //printDisplayType(); //Used to print the screen after every cell is checked
             //printAge();
 #ifndef DEBUG
@@ -61,74 +69,53 @@ void movesManager() {
 #endif //DEBUG
             if (highBed[i][j].hasCompletedTurn == false) { //If completed turn move on
 
-                struct organism directions[8] = { //Hardcoded locations of every neigbouring cell used for slug and lettuce interactions
-                        highBed[i][j - 1], highBed[i + 1][j - 1], highBed[i + 1][j],
-                        highBed[i + 1][j + 1], highBed[i][j + 1], highBed[i - 1][j + 1],
-                        highBed[i - 1][j], highBed[i - 1][j - 1]
-                };
-
                 switch (highBed[i][j].type) { //Check type of cell
                     case LETTUCE:
                         highBed[i][j].age++;
                         double growChance = random0to1();
+                        highBed[i][j].hasCompletedTurn = true;
                         if (highBed[i][j].l.growProb > growChance) {
-                            highBed[i][j].hasCompletedTurn = true;
-                            int growLocation = random_range(1, 8);
-                            if (directions[growLocation].type == EMPTY) {
-                                directions[growLocation] = newSlug;
+                            if (highBed[i][j - 1].type == EMPTY) {
+                                highBed[i][j - 1] = newLettuce;
+                                highBed[i][j - 1].hasCompletedTurn = true;
+                                break;
+                            }
+                            if (highBed[i + 1][j - 1].type == EMPTY) {
+                                highBed[i + 1][j - 1] = newLettuce;
+                                highBed[i + 1][j - 1].hasCompletedTurn = true;
+                                break;
+                            }
+                            if (highBed[i + 1][j].type == EMPTY) {
+                                highBed[i + 1][j] = newLettuce;
+                                highBed[i + 1][j].hasCompletedTurn = true;
+                                break;
+                            }
+                            if (highBed[i + 1][j + 1].type == EMPTY) {
+                                highBed[i + 1][j + 1] = newLettuce;
+                                highBed[i + 1][j + 1].hasCompletedTurn = true;
+                                break;
+                            }
+                            if (highBed[i][j + 1].type == EMPTY) {
+                                highBed[i][j + 1] = newLettuce;
+                                highBed[i][j + 1].hasCompletedTurn = true;
+                                break;
+                            }
+                            if (highBed[i - 1][j + 1].type == EMPTY) {
+                                highBed[i - 1][j + 1] = newLettuce;
+                                highBed[i - 1][j + 1].hasCompletedTurn = true;
+                                break;
+                            }
+                            if (highBed[i - 1][j].type == EMPTY) {
+                                highBed[i - 1][j] = newLettuce;
+                                highBed[i - 1][j].hasCompletedTurn = true;
+                                break;
+                            }
+                            if (highBed[i - 1][j - 1].type == EMPTY) {
+                                highBed[i - 1][j - 1] = newLettuce;
+                                highBed[i - 1][j - 1].hasCompletedTurn = true;
+                                break;
                             }
                         }
-
-                        /*switch (growLocation) {
-                            case 1:
-                                if (directions[0].type == EMPTY) {
-                                    directions[0] = newLettuce;
-                                    directions[0].hasCompletedTurn = true;
-                                }
-                                break;
-                            case 2:
-                                if (directions[1].type == EMPTY) {
-                                    directions[1] = newLettuce;
-                                    directions[1].hasCompletedTurn = true;
-                                }
-                                break;
-                            case 3:
-                                if (directions[2].type == EMPTY) {
-                                    directions[2] = newLettuce;
-                                    directions[2].hasCompletedTurn = true;
-                                }
-                                break;
-                            case 4:
-                                if (directions[3].type == EMPTY) {
-                                    directions[3] = newLettuce;
-                                    directions[3].hasCompletedTurn = true;
-                                }
-                                break;
-                            case 5:
-                                if (directions[4].type == EMPTY) {
-                                    directions[4] = newLettuce;
-                                    directions[4].hasCompletedTurn = true;
-                                }
-                                break;
-                            case 6:
-                                if (directions[5].type == EMPTY) {
-                                    directions[5] = newLettuce;
-                                    directions[5].hasCompletedTurn = true;
-                                }
-                                break;
-                            case 7:
-                                if (directions[6].type == EMPTY) {
-                                    directions[6] = newLettuce;
-                                    directions[6].hasCompletedTurn = true;
-                                }
-                                break;
-                            case 8:
-                                if (directions[7].type == EMPTY) {
-                                    directions[7] = newLettuce;
-                                    directions[7].hasCompletedTurn = true;
-                                }
-                                break;
-                        }*/
                         break;
                     case SLUG:
                         highBed[i][j].age++; //Increase age of slug
@@ -136,107 +123,332 @@ void movesManager() {
                             highBed[i][j] = emptySpace;
                             break;
                         }
+                        //This handles eating
+                        if (highBed[i][j].hasCompletedTurn == false) {
+                            if (highBed[i][j + 1].type == LETTUCE && highBed[i][j].hasCompletedTurn == false) {
+                                highBed[i][j + 1] = emptySpace;
+                                highBed[i][j].hasCompletedTurn = true;
+                                break;
+                            }
+                            if (highBed[i][j - 1].type == LETTUCE && highBed[i][j].hasCompletedTurn == false) {
+                                highBed[i][j - 1] = emptySpace;
+                                highBed[i][j].hasCompletedTurn = true;
+                                break;
+                            }
+                            if (highBed[i + 1][j - 1].type == LETTUCE && highBed[i][j].hasCompletedTurn == false) {
+                                highBed[i + 1][j - 1] = emptySpace;
+                                highBed[i][j].hasCompletedTurn = true;
+                                break;
+                            }
+                            if (highBed[i - 1][j + 1].type == LETTUCE && highBed[i][j].hasCompletedTurn == false) {
+                                highBed[i - 1][j + 1] = emptySpace;
+                                highBed[i][j].hasCompletedTurn = true;
+                                break;
+                            }
+                            if (highBed[i - 1][j].type == LETTUCE && highBed[i][j].hasCompletedTurn == false) {
+                                highBed[i - 1][j] = emptySpace;
+                                highBed[i][j].hasCompletedTurn = true;
+                                break;
+                            }
+                            if (highBed[i + 1][j].type == LETTUCE && highBed[i][j].hasCompletedTurn == false) {
+                                highBed[i + 1][j] = emptySpace;
+                                highBed[i][j].hasCompletedTurn = true;
+                                break;
+                            }
+                        }
                         if (highBed[i][j].isMature) { //This handles slug reproduction
                             for (int k = 0; k < 7; k++) {
                                 if (directions[k].type == SLUG && directions[k].isMature) {
-                                    int slugSpawnLocation = random_range(0, 7);
-                                    if (directions[slugSpawnLocation].type == EMPTY) {
-                                        directions[slugSpawnLocation] = newSlug;
+                                    slugSpawnLocation = random_range(0, 7);
+                                    int slugSpawnDir = random_range(NORTH, WEST);
+                                    switch (slugSpawnLocation) {
+                                        case 0:
+                                            if (directions[slugSpawnLocation].type == EMPTY) {
+                                                highBed[i][j - k] = newSlug;
+                                                highBed[i][j - k].dir = slugSpawnDir;
+                                                highBed[i][j - k].hasCompletedTurn = true;
+                                                highBed[i][j].hasCompletedTurn = true;
+                                            }
+                                            break;
+                                        case 1:
+                                            if (directions[slugSpawnLocation].type == EMPTY) {
+                                                highBed[i + k][j - k] = newSlug;
+                                                highBed[i + k][j - k].dir = slugSpawnDir;
+                                                highBed[i + k][j - k].hasCompletedTurn = true;
+                                                highBed[i][j].hasCompletedTurn = true;
+                                            }
+                                            break;
+                                        case 2:
+                                            if (directions[slugSpawnLocation].type == EMPTY) {
+                                                highBed[i + k][j] = newSlug;
+                                                highBed[i + k][j].dir = slugSpawnDir;
+                                                highBed[i + k][j].hasCompletedTurn = true;
+                                                highBed[i][j].hasCompletedTurn = true;
+                                            }
+                                            break;
+                                        case 3:
+                                            if (directions[slugSpawnLocation].type == EMPTY) {
+                                                highBed[i + k][j + k] = newSlug;
+                                                highBed[i + k][j + k].dir = slugSpawnDir;
+                                                highBed[i + k][j + k].hasCompletedTurn = true;
+                                                highBed[i][j].hasCompletedTurn = true;
+                                            }
+                                            break;
+                                        case 4:
+                                            if (directions[slugSpawnLocation].type == EMPTY) {
+                                                highBed[i][j + k] = newSlug;
+                                                highBed[i][j + k].dir = slugSpawnDir;
+                                                highBed[i][j + k].hasCompletedTurn = true;
+                                                highBed[i][j].hasCompletedTurn = true;
+                                            }
+                                            break;
+                                        case 5:
+                                            if (directions[slugSpawnLocation].type == EMPTY) {
+                                                highBed[i - k][j + k] = newSlug;
+                                                highBed[i - k][j + k].dir = slugSpawnDir;
+                                                highBed[i - k][j + k].hasCompletedTurn = true;
+                                                highBed[i][j].hasCompletedTurn = true;
+                                            }
+                                            break;
+                                        case 6:
+                                            if (directions[slugSpawnLocation].type == EMPTY) {
+                                                highBed[i - k][j] = newSlug;
+                                                highBed[i - k][j].dir = slugSpawnDir;
+                                                highBed[i - k][j].hasCompletedTurn = true;
+                                                highBed[i][j].hasCompletedTurn = true;
+                                            }
+                                            break;
+                                        case 7:
+                                            if (directions[slugSpawnLocation].type == EMPTY) {
+                                                highBed[i - k][j - k] = newSlug;
+                                                highBed[i - k][j - k].dir = slugSpawnDir;
+                                                highBed[i - k][j - k].hasCompletedTurn = true;
+                                                highBed[i][j].hasCompletedTurn = true;
+                                            }
+                                            break;
+                                        default:
+                                            break;
                                     }
                                 }
                             }
                         }
-                        for (int l = 0; l < 7; l++) { //This handles eating
-                            if (directions[l].type == LETTUCE && highBed[i][j].hasCompletedTurn == false) {
-                                directions[l] = emptySpace;
-                                directions[l].hasCompletedTurn = true;
+                        if (highBed[i][j].hasCompletedTurn == false) { //This handles movement if no food
+                            int moveDir = highBed[i][j].dir;
+                            switch (moveDir) {
+                                case 1:
+                                    if (highBed[i][j - 1].type == EMPTY) {
+                                        highBed[i][j - 1].hasCompletedTurn = true;
+                                        highBed[i][j - 1] = highBed[i][j];
+                                        highBed[i][j] = emptySpace;
+                                        break;
+                                    }
+                                    highBed[i][j].dir = random_range(NORTH, WEST);
+                                    break;
+                                case 2:
+                                    if (highBed[i + 1][j - 1].type == EMPTY) {
+                                        highBed[i + 1][j - 1].hasCompletedTurn = true;
+                                        highBed[i + 1][j - 1] = highBed[i][j];
+                                        highBed[i][j] = emptySpace;
+                                        break;
+                                    }
+                                    highBed[i][j].dir = random_range(NORTH, WEST);
+                                    break;
+                                case 3:
+                                    if (highBed[i + 1][j].type == EMPTY) {
+                                        highBed[i + 1][j].hasCompletedTurn = true;
+                                        highBed[i + 1][j] = highBed[i][j];
+                                        highBed[i][j] = emptySpace;
+                                        break;
+                                    }
+                                    highBed[i][j].dir = random_range(NORTH, WEST);
+                                    break;
+                                case 4:
+                                    if (highBed[i + 1][j + 1].type == EMPTY) {
+                                        highBed[i + 1][j + 1].hasCompletedTurn = true;
+                                        highBed[i + 1][j + 1] = highBed[i][j];
+                                        highBed[i][j] = emptySpace;
+                                        break;
+                                    }
+                                    highBed[i][j].dir = random_range(NORTH, WEST);
+                                    break;
+                                case 5:
+                                    if (highBed[i][j + 1].type == EMPTY) {
+                                        highBed[i][j + 1].hasCompletedTurn = true;
+                                        highBed[i][j + 1] = highBed[i][j];
+                                        highBed[i][j] = emptySpace;
+                                        break;
+                                    }
+                                    highBed[i][j].dir = random_range(NORTH, WEST);
+                                    break;
+                                case 6:
+                                    if (highBed[i - 1][j + 1].type == EMPTY) {
+                                        highBed[i - 1][j + 1].hasCompletedTurn = true;
+                                        highBed[i - 1][j + 1] = highBed[i][j];
+                                        highBed[i][j] = emptySpace;
+                                        break;
+                                    }
+                                    highBed[i][j].dir = random_range(NORTH, WEST);
+                                    break;
+                                case 7:
+                                    if (highBed[i - 1][j].type == EMPTY) {
+                                        highBed[i - 1][j].hasCompletedTurn = true;
+                                        highBed[i - 1][j] = highBed[i][j];
+                                        highBed[i][j] = emptySpace;
+                                        break;
+                                    }
+                                    highBed[i][j].dir = random_range(NORTH, WEST);
+                                    break;
+                                case 8:
+                                    if (highBed[i - 1][j - 1].type == EMPTY) {
+                                        highBed[i - 1][j - 1].hasCompletedTurn = true;
+                                        highBed[i - 1][j - 1] = highBed[i][j];
+                                        highBed[i][j] = emptySpace;
+                                        break;
+                                    }
+                                    highBed[i][j].dir = random_range(NORTH, WEST);
+                                    break;
+                                default:
+                                    highBed[i][j].dir = random_range(NORTH, WEST);
+                                    break;
+                            }
+                            break;
+                            case FROG:
+                                highBed[i][j].age++; //Increase age of frog
+                            highBed[i][j].f.hunger++; //Increase hunger of frog
+                            if (highBed[i][j].age >= highBed[i][j].f.frogLifespan) { //Kill frog if too old
+                                highBed[i][j] = emptySpace;
                                 break;
                             }
-                        }
-                        if (highBed[i][j].hasCompletedTurn == false) { //This handles movement if not eaten
-                            int moveDir = highBed[i][j].dir;
-                            directions[moveDir] = highBed[i][j];
-                            highBed[i][j] = emptySpace;
-                            break;
-                        }
-                        break;
-                    case FROG:
-                        highBed[i][j].age++; //Increase age of frog
-                        highBed[i][j].f.hunger++; //Increase hunger of frog
-                        if (highBed[i][j].age >= highBed[i][j].f.frogLifespan) { //Kill frog if too old
-                            highBed[i][j] = emptySpace;
-                            break;
-                        }
-                        if (highBed[i][j].isMature) { //This handles frog reproduction //TODO doesn't work with vision atm
-                            for (int k = 0; k < 7; k++) {
-                                if (directions[k].type == FROG && directions[k].isMature) {
-                                    int slugSpawnLocation = random_range(0, 7);
-                                    directions[slugSpawnLocation] = newFrog;
+                            if (highBed[i][j].isMature) { //This handles frog reproduction //TODO doesn't work with vision atm
+                                for (int k = 0; k < 7; k++) {
+                                    if (directions[k].type == FROG && directions[k].isMature) {
+                                        frogSpawnLocation = random_range(0, 7);
+                                        directions[frogSpawnLocation] = newFrog;
+                                    }
                                 }
                             }
-                        }
-                        //This checks every direction as far as the frog can see, if there's
-                        //food the frog will move to that location, removing the slug and reset
-                        //the frog's hunger level
-                        int range = newFrog.f.visionDistance;
-                        for (int l = 1; l <= range; l++) {
-                            if (highBed[i][j + l].type == SLUG && highBed[i][j].hasCompletedTurn == false) {
-                                highBed[i][j + l].f.hunger = 0;
-                                highBed[i][j + l] = highBed[i][j];
-                                highBed[i][j + l] = emptySpace;
-                                break;
+                            //This checks every direction as far as the frog can see, if there's
+                            //food the frog will move to that location, removing the slug and reset
+                            //the frog's hunger level
+                            if (highBed[i][j].hasCompletedTurn == false) {
+                                int range = newFrog.f.visionDistance;
+                                for (int l = 1; l <= range; l++) {
+                                    if (highBed[i][j + l].type == SLUG) {
+                                        highBed[i][j + l].f.hunger = 0;
+                                        highBed[i][j + l] = highBed[i][j];
+                                        highBed[i][j + l] = emptySpace;
+                                        break;
+                                    }
+                                    if (highBed[i][j - l].type == SLUG) {
+                                        highBed[i][j - l].f.hunger = 0;
+                                        highBed[i][j - l] = highBed[i][j];
+                                        highBed[i][j - l] = emptySpace;
+                                        break;
+                                    }
+                                    if (highBed[i + l][j - l].type == SLUG) {
+                                        highBed[i + l][j - l].f.hunger = 0;
+                                        highBed[i + l][j - l] = highBed[i][j];
+                                        highBed[i + l][j - l] = emptySpace;
+                                        break;
+                                    }
+                                    if (highBed[i - l][j + l].type == SLUG) {
+                                        highBed[i - l][j + l].f.hunger = 0;
+                                        highBed[i - l][j + l] = highBed[i][j];
+                                        highBed[i - l][j + l] = emptySpace;
+                                        break;
+                                    }
+                                    if (highBed[i - l][j].type == SLUG) {
+                                        highBed[i - l][j].f.hunger = 0;
+                                        highBed[i - l][j] = highBed[i][j];
+                                        highBed[i - l][j] = emptySpace;
+                                        break;
+                                    }
+                                    if (highBed[i + l][j].type == SLUG) {
+                                        highBed[i + l][j].f.hunger = 0;
+                                        highBed[i + l][j] = highBed[i][j];
+                                        highBed[i + l][j] = emptySpace;
+                                        break;
+                                    }
+                                }
                             }
-                        }
-                        for (int l = 1; l <= range; l++) {
-                            if (highBed[i + l][j].type == SLUG && highBed[i][j].hasCompletedTurn == false) {
-                                highBed[i + l][j - l].f.hunger = 0;
-                                highBed[i + l][j - l] = highBed[i][j];
-                                highBed[i + l][j - l] = emptySpace;
-                                break;
-                            }
-                        }
-                        for (int l = 1; l <= range; l++) {
-                            if (highBed[i - l][j].type == SLUG && highBed[i][j].hasCompletedTurn == false) {
-                                highBed[i - l][j].f.hunger = 0;
-                                highBed[i - l][j] = highBed[i][j];
-                                highBed[i - l][j] = emptySpace;
-                                break;
+                            //Moves the frog to a random cell if no food
+                            if (highBed[i][j].hasCompletedTurn == false && highBed[i][j].f.hunger > 0) {
+                                int range = newFrog.f.visionDistance;
+                                for (int l = 1; l <= range; l++) {
+                                    if (highBed[i][j + l].type == EMPTY) {
+                                        highBed[i][j + l] = highBed[i][j];
+                                        highBed[i][j + l] = emptySpace;
+                                        break;
+                                    }
+                                    if (highBed[i][j - l].type == EMPTY) {
+                                        highBed[i][j - l] = highBed[i][j];
+                                        highBed[i][j - l] = emptySpace;
+                                        break;
+                                    }
+                                    if (highBed[i + l][j - l].type == EMPTY) {
+                                        highBed[i + l][j - l] = highBed[i][j];
+                                        highBed[i + l][j - l] = emptySpace;
+                                        break;
+                                    }
+                                    if (highBed[i - l][j + l].type == EMPTY) {
+                                        highBed[i - l][j + l] = highBed[i][j];
+                                        highBed[i - l][j + l] = emptySpace;
+                                        break;
+                                    }
+                                    if (highBed[i - l][j].type == EMPTY) {
+                                        highBed[i - l][j] = highBed[i][j];
+                                        highBed[i - l][j] = emptySpace;
+                                        break;
+                                    }
+                                    if (highBed[i + l][j].type == EMPTY) {
+                                        highBed[i + l][j] = highBed[i][j];
+                                        highBed[i + l][j] = emptySpace;
+                                        break;
+                                    }
+                                }
                             }
                             break;
+                            case EMPTY:
+                                // Move onto next cell
+                                break;
+                            case WALL:
+                                // Move onto next cell
+                                break;
+                            default:
+                                printf("error, there appears to be an undefined cell");
+                            break;
                         }
-
-                        if (highBed[i][j].hasCompletedTurn == false) { //This handles movement if hungry and no food seen
-                            int hopRange = newFrog.f.visionDistance * 2;
-                            int randomHop = random_range(1, range);
-                            directions[randomHop] = highBed[i][j];
-                            highBed[i][j] = emptySpace;
-                        }
-                        break;
-                    case EMPTY:
-                        // Move onto next cell
-                        break;
-                    case WALL:
-                        // Move onto next cell
-                        break;
-                    default:
-                        printf("error, there appears to be an undefined cell");
-                        break;
                 }
             }
-
         }
     }
 }
 
+
 //Handles input for number of days to run
 int runSimulation(int d) {
     for(int i = 0; i < d; i++) {
-        movesManager();
-        updateOrganismMaturity();
-        nextTurn();
-        //clear_output(); //Used for terminal simulation
-        printDisplayType();
-        //day++;
+        /*char prev = 0;
+
+        while(1)
+        {
+            char c = getchar();
+
+            if(c == '\n' && prev == c)
+            {*/
+                movesManager();
+                updateOrganismMaturity();
+                nextTurn();
+                //clear_output(); //Used for terminal simulation
+                printDisplayType();
+/*        printf("Run next round?\n"); //TODO ask for next simulation round
+        char input;
+        scanf("%s", &input); //load config*/
+                /*break;
+            }
+
+            prev = c;
+        }*/
     }
     return 0;
 }
@@ -254,13 +466,13 @@ void updateOrganismMaturity(){
         for (int j = 0; j < GARDEN_SIZE; j++) {
 
             if(highBed[i][j].type == SLUG) {
-                if (highBed[i][j].s.slugMatureAge < highBed[i][j].age) {
+                if (newSlug.s.slugMatureAge <= highBed[i][j].age) {
                     highBed[i][j].isMature = true;
                     strcpy(highBed[i][j].displayType, " S ");
                 }
             }
             if (highBed[i][j].type == FROG){
-                if (highBed[i][j].f.frogMatureAge < highBed[i][j].age) {
+                if (newFrog.f.frogMatureAge <= highBed[i][j].age) {
                     highBed[i][j].isMature = true;
                     strcpy(highBed[i][j].displayType, " F ");
                 }
