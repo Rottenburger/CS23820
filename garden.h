@@ -55,11 +55,11 @@ struct frog {
  * it should be sufficient for now.
  * Varibles include its location, direction, type, display type
  * (used for printing) etc.
- * It also contains structs of each type of organism as parameters,
- * this allows the 2D grid to contain any type of organism without
+ * It also contains structs of each type of cell as parameters,
+ * this allows the 2D grid to contain any type of cell without
  * the need to track each one.
  */
-struct organism {
+struct cell {
     int row;
     int column;
     int age;

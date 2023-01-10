@@ -12,11 +12,11 @@
  * These are all the variables created in the garden_initialise.c file being
  * used in the simulation.
  */
-extern struct organism highBed[GARDEN_SIZE][GARDEN_SIZE];
-extern struct organism newLettuce;
-extern struct organism newSlug;
-extern struct organism newFrog;
-extern struct organism emptySpace;
+extern struct cell highBed[GARDEN_SIZE][GARDEN_SIZE];
+extern struct cell newLettuce;
+extern struct cell newSlug;
+extern struct cell newFrog;
+extern struct cell emptySpace;
 
 /**
 * set the random number seed to produce unpredictable random sequences
@@ -49,7 +49,7 @@ double random0to1(){
  * but I didn't have time to separate its functionality.
  * Essentially, this function goes through every cell in the 2D grid one by one. It checks what is in
  * each cell of the 2D grid using a switch statement then decides what to simulate based on the type
- * of organism it lands on. If it lands on a wall or empty type it moves onto the next cell, if it lands
+ * of cell it lands on. If it lands on a wall or empty type it moves onto the next cell, if it lands
  * on different type it will then try to simulate that particular organisms functionality.
  */
 void movesManager() {
@@ -64,7 +64,7 @@ void movesManager() {
                 int slugSpawnLocation = 0;
                 int frogSpawnLocation = 0;
 
-                struct organism directions[8] = { //Hardcoded locations of every neigbouring cell used for slug and lettuce interactions
+                struct cell directions[8] = { //Hardcoded locations of every neigbouring cell used for slug and lettuce interactions
                         highBed[i][j - 1], highBed[i + 1][j - 1], highBed[i + 1][j],
                         highBed[i + 1][j + 1], highBed[i][j + 1], highBed[i - 1][j + 1],
                         highBed[i - 1][j], highBed[i - 1][j - 1]
@@ -75,7 +75,7 @@ void movesManager() {
                         highBed[i][j].age++;
                         double growChance = random0to1();
                         highBed[i][j].hasCompletedTurn = true;
-                        if (highBed[i][j].l.growProb > growChance) {
+                        if (highBed[i][j].l.growProb < growChance) {
                             if (highBed[i][j - 1].type == EMPTY) {
                                 highBed[i][j - 1] = newLettuce;
                                 highBed[i][j - 1].hasCompletedTurn = true;
@@ -537,7 +537,7 @@ void movesManager() {
                             //This checks every direction as far as the frog can see, if there's
                             //food the frog will move to that location, removing the slug and reset
                             //the frog's hunger level
-                            if (highBed[i][j].hasCompletedTurn == false) {
+                            if (highBed[i][j].hasCompletedTurn == false && highBed[i][j].f.hunger <= 10) {
                                 int range = newFrog.f.visionDistance;
                                 for (int l = 1; l <= range; l++) {
                                     if (highBed[i][j + l].type == SLUG) {
@@ -615,7 +615,7 @@ void movesManager() {
                                 }
                             }
                             //Moves the frog to a random cell if no food
-                            if (highBed[i][j].hasCompletedTurn == false && highBed[i][j].f.hunger > 0) {
+                            if (highBed[i][j].hasCompletedTurn == false && highBed[i][j].f.hunger <= 10) {
                                 int range = newFrog.f.visionDistance;
                                 for (int l = 1; l <= range; l++) {
                                     if (highBed[i][j + l].type == EMPTY) {
@@ -704,7 +704,7 @@ void movesManager() {
 }
 /**
  * This function takes an int input to calculate the number of simulations to be run
- * by the program. It also handles resting the turns for each organism and updating
+ * by the program. It also handles resting the turns for each cell and updating
  * the maturity of slugs and frogs.
  * @param d number of simulations
  * @return return 0 if simulation finished

@@ -10,11 +10,11 @@
 /**
  * 2D grid variable containing all the data to printed
  */
-extern struct organism highBed[GARDEN_SIZE][GARDEN_SIZE];
+extern struct cell highBed[GARDEN_SIZE][GARDEN_SIZE];
 
 /**
  * These are alternative methods that I used for printing other information about
- * each organism in order to debug my program.
+ * each cell in order to debug my program.
  */
 #ifndef DEBUG
 void printHighBed() {

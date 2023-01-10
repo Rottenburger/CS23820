@@ -5,7 +5,7 @@ Thomas Roethenbaugh
 Files:
 main.c - Handles the menu and controls which functions are called throughout the program
 garden.h - Container for global structs and enums, also allows the main.c to access each function
-garden_initialise.c - Declares each type of organism struct and creates an empty 2D array of organism structs
+garden_initialise.c - Declares each type of cell struct and creates an empty 2D array of cell structs
 garden_output.c - Handles all the printing functions independent of the simulation
 garden_readconfig.c - Is supposed to read the config text files (see known bugs)
 garden_simulation.c - Handles the simulation of the 2D grid, most of this functionally is contained in the movesManager
@@ -24,5 +24,6 @@ fillHighBed - Fills the high bed with empty cells and organisms like lettuce, sl
 
 Known bugs:
 -Frog never moves despite program saying it does
+-Frogs cannot reproduce
 -Read config not working
 -Slugs sometimes move incorrectly
